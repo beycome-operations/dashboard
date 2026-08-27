@@ -1,0 +1,1388 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Customer Success · beycome</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f5f7; --card:#fff; --line:#e8eaed; --line2:#f1f3f5;
+  --ink:#111318; --ink2:#5f6570; --ink3:#8b919b;
+  --coral:#ff7a59; --coral2:#f2643c; --coral-soft:#fff3ef;
+  --green:#16a34a; --green-bg:#e6f4ea; --green-ink:#137333;
+  --red:#dc2626; --red-bg:#fde8e8; --red-ink:#c5221f;
+  --amber:#f59e0b; --amber-bg:#fef3c7;
+  --blue:#3b82f6; --indigo:#6366f1; --indigo-bg:#eef2ff;
+  --r:14px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:transparent; color:var(--ink);
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  font-size:14px; -webkit-font-smoothing:antialiased;
+}
+/* ---------- shell ---------- */
+.wrap{max-width:1560px;margin:0 auto;padding:30px 26px 60px}
+.head{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:22px}
+h1{font-size:31px;font-weight:800;letter-spacing:-.032em;margin:0}
+.head-r{display:flex;align-items:center;gap:11px}
+.pills{display:flex;background:#fff;border:1px solid var(--line);border-radius:10px;padding:4px;gap:2px}
+.pill{border:0;background:none;font:inherit;font-size:13px;font-weight:600;color:var(--ink2);padding:7px 15px;border-radius:7px;cursor:pointer;white-space:nowrap}
+.pill.on{background:var(--ink);color:#fff}
+.btn{display:flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:9px 15px;font:inherit;font-size:13px;font-weight:600;cursor:pointer;color:var(--ink)}
+.btn:hover{background:#fafbfc}
+.rng{display:none;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:6px 11px}
+.rng.show{display:flex}
+.rng input{font:inherit;font-size:12.5px;font-weight:600;border:0;outline:0;color:var(--ink);background:none;cursor:pointer}
+.rng span{color:var(--ink3);font-size:12px}
+.stale .snap{background:var(--amber-bg);color:#92400e}
+.snap{margin-left:auto;font-size:9.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;
+  background:#f0f1f3;color:var(--ink3);padding:2px 7px;border-radius:5px}
+.flow{display:flex;height:34px;border-radius:9px;overflow:hidden;background:#eef0f2}
+.flow i{display:block;transition:filter .15s}
+.flow i:hover{filter:brightness(1.08)}
+.flow-l{display:flex;flex-direction:column;gap:10px}
+.flow-hero{margin-top:16px;display:flex;align-items:baseline;gap:11px;flex-wrap:wrap}
+.flow-hero>div{font-size:38px;font-weight:800;letter-spacing:-.035em;line-height:1;color:var(--green-ink)}
+.flow-hero .pc{font-size:22px}
+.flow-hero p{margin:0;font-size:12.5px;color:var(--ink2)}
+.flow-hero b{color:var(--ink);font-weight:700}
+table.reasons td{padding:13px 10px}
+table.reasons td.rsn{font-weight:600;line-height:1.35;min-width:190px}
+.flow-r{display:flex;align-items:center;gap:10px;font-size:13px}
+.flow-r i{width:10px;height:10px;border-radius:3px;flex:none}
+.flow-r b{margin-left:auto;font-weight:700;font-variant-numeric:tabular-nums}
+.flow-r span{color:var(--ink3);font-size:12px;width:46px;text-align:right;font-variant-numeric:tabular-nums}
+.empty{text-align:center;padding:34px 20px;color:var(--ink3);font-size:13px}
+.empty b{display:block;color:var(--ink2);font-size:14px;margin-bottom:5px}
+/* ---------- tabs ---------- */
+.tabs{display:flex;gap:6px;border-bottom:1px solid var(--line);margin-bottom:26px;overflow-x:auto}
+.tab{display:flex;align-items:center;gap:8px;border:0;background:none;font:inherit;font-size:14px;font-weight:600;color:var(--ink2);padding:13px 15px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap}
+.tab.on{color:var(--ink);border-bottom-color:var(--ink)}
+.tab .cnt{background:var(--line2);color:var(--ink2);border-radius:20px;font-size:11px;font-weight:700;padding:1px 8px}
+.tab.on .cnt{background:var(--red-bg);color:var(--red-ink)}
+/* ---------- cards ---------- */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:18px}
+.kpi-lbl{display:flex;align-items:center;gap:9px;font-size:11px;font-weight:800;color:var(--ink);text-transform:uppercase;letter-spacing:.075em;margin-bottom:13px}
+.dot{width:7px;height:7px;border-radius:50%;flex:none}
+.kpi-val{font-size:37px;font-weight:800;letter-spacing:-.035em;line-height:1.05}
+.kpi-sub{display:flex;align-items:center;gap:9px;margin-top:11px;font-size:12.5px;color:var(--ink2)}
+.chip{display:inline-flex;align-items:center;gap:3px;border-radius:7px;padding:3px 8px;font-size:11.5px;font-weight:700}
+.chip.up{background:var(--green-bg);color:var(--green-ink)}
+.chip.down{background:var(--red-bg);color:var(--red-ink)}
+.chip.flat{background:#eef0f2;color:var(--ink2)}
+.meter-row{display:flex;justify-content:space-between;font-size:12px;color:var(--ink2);margin:17px 0 7px;font-weight:500}
+.meter-row b{color:var(--ink);font-weight:700}
+.meter-row b.r{color:var(--red-ink)}
+.meter-row b.g{color:var(--green-ink)}
+.meter{height:6px;background:#eef0f2;border-radius:20px;overflow:hidden}
+.meter i{display:block;height:100%;border-radius:20px}
+.meter.split{display:flex;gap:2px}
+.meter.split i{border-radius:20px;flex:none}
+.meter.range{position:relative;background:linear-gradient(90deg,#cdeadb,#fcd9a8,#f7c3c3)}
+.meter.range i{background:none}
+.sec-t.first{margin-top:4px}
+.find{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:9px;padding:8px 12px;color:var(--ink3);min-width:190px}
+.find:focus-within{border-color:var(--indigo);box-shadow:0 0 0 3px #eef2ff}
+.find input{border:0;outline:0;font:inherit;font-size:13px;width:100%;background:none;color:var(--ink)}
+table.rank th[data-k]{cursor:pointer;user-select:none;white-space:nowrap}
+table.rank th.ctr{text-align:center}
+table.rank th[data-k]:hover{color:var(--ink)}
+table.rank th.num,table.reasons th.num{text-align:right}
+table.rank td.num,table.reasons td.num{text-align:right}
+table.rank th[data-k]::after{content:"";display:inline-block;width:0;height:0;margin-left:5px;vertical-align:middle;opacity:0}
+table.rank th.asc::after{opacity:.6;border-left:4px solid transparent;border-right:4px solid transparent;border-bottom:5px solid currentColor}
+table.rank th.desc::after{opacity:.6;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid currentColor}
+.rk-badge{display:grid;place-items:center;width:26px;height:26px;border-radius:8px;background:#f0f1f3;
+  color:var(--ink3);font-size:11.5px;font-weight:800}
+.medal{position:relative;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
+  color:#fff;font-size:11.5px;font-weight:800;box-shadow:0 1px 3px rgba(0,0,0,.18)}
+.medal svg{display:block}
+.medal::after{content:"";position:absolute;bottom:-4px;left:50%;transform:translateX(-50%);
+  width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent}
+.medal.m1{background:linear-gradient(145deg,#f2c94c,#c99700)}
+.medal.m1::after{border-top:6px solid #c99700}
+.medal.m2{background:linear-gradient(145deg,#d8dde3,#a9b2bc)}
+.medal.m2::after{border-top:6px solid #a9b2bc}
+.medal.m3{background:linear-gradient(145deg,#e0a276,#b0703c)}
+.medal.m3::after{border-top:6px solid #b0703c}
+table.rank td:first-child{padding-top:17px;padding-bottom:17px}
+tr.dim{opacity:.42}
+.kpi-val.todo{color:var(--ink3)}
+.wire{border:1px dashed #d6dae0;border-radius:12px;padding:22px;background:#fbfcfd}
+.wire b{display:block;font-size:14px;margin-bottom:6px;letter-spacing:-.01em}
+.wire p{margin:0;font-size:12.5px;color:var(--ink2);line-height:1.6}
+.meter.empty{background:repeating-linear-gradient(45deg,#eef0f2,#eef0f2 5px,#e3e6e9 5px,#e3e6e9 10px)}
+.meter-row b.todo{color:var(--ink3);font-weight:700}
+.meter.range .pin{position:absolute;top:-3px;width:3px;height:12px;border-radius:3px;background:var(--ink);transform:translateX(-1px)}
+.f-coral{background:linear-gradient(90deg,#ffb59c,var(--coral))}
+.f-green{background:linear-gradient(90deg,#8fd3a8,var(--green))}
+.f-amber{background:linear-gradient(90deg,#fcd34d,var(--amber))}
+.f-red{background:linear-gradient(90deg,#fca5a5,var(--red))}
+/* champion card */
+.champ{background:linear-gradient(135deg,#fff6f2,#ffece5);border-color:#ffd9cb}
+.champ-row{display:flex;align-items:center;gap:13px}
+.champ-nm{font-size:19px;font-weight:800;letter-spacing:-.02em}
+.champ-mt{font-size:12.5px;color:var(--ink2);margin-top:3px}
+.champ-mt b{color:var(--ink)}
+.av{border-radius:50%;object-fit:cover;flex:none;display:grid;place-items:center;font-weight:700;color:#fff;letter-spacing:.02em}
+.av.g1{background:#8b5cf6}.av.g2{background:#0ea5e9}.av.g3{background:#f43f5e}.av.g4{background:#10b981}.av.g5{background:#f59e0b}
+/* ---------- two col ---------- */
+.two{display:grid;grid-template-columns:1.72fr 1fr;gap:18px;margin-bottom:18px;align-items:start}
+.two.even{grid-template-columns:1fr 1fr}
+.card-h{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:5px}
+.card-t{font-size:17.5px;font-weight:800;letter-spacing:-.025em}
+.card-s{font-size:12.5px;color:var(--ink3);margin-top:3px}
+select.sel{font:inherit;font-size:13px;font-weight:600;border:1px solid var(--line);border-radius:9px;padding:8px 11px;background:#fff;color:var(--ink);cursor:pointer}
+/* ---------- table ---------- */
+table{width:100%;border-collapse:collapse;margin-top:16px}
+th{text-align:left;font-size:10.5px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.07em;padding:0 10px 11px;border-bottom:1px solid var(--line2);white-space:nowrap}
+td{padding:15px 10px;border-bottom:1px solid var(--line2);font-size:13.5px;vertical-align:middle}
+tr:last-child td{border-bottom:0}
+.rk{color:var(--ink3);font-weight:700;font-size:13px;width:22px}
+.who{display:flex;align-items:center;gap:11px}
+.who-nm{font-weight:700;font-size:13.5px;letter-spacing:-.01em}
+.who-mt{font-size:11.5px;color:var(--ink3);margin-top:2px}
+.mono{font-variant-numeric:tabular-nums}
+.kpi-dots{display:flex;gap:4px}
+.kd{width:22px;height:6px;border-radius:20px;background:#e3e6e9}
+.kd.hit{background:var(--green)}
+.bar-cell{display:flex;align-items:center;gap:11px;min-width:150px}
+.bar-cell .meter{flex:1;min-width:74px}
+.bar-cell span{font-size:12px;font-weight:700;width:42px;text-align:right;font-variant-numeric:tabular-nums}
+.g{color:var(--green-ink)}.r{color:var(--red-ink)}.a{color:#b45309}
+/* ---------- panel list ---------- */
+.panel{background:#fbfcfe;border:1px solid #e7ebf3;border-radius:var(--r);padding:22px}
+.panel.indigo{background:#fafbff;border-color:#e4e8fb}
+.foc{padding:13px 0;border-bottom:1px solid var(--line2)}
+.foc:last-child{border-bottom:0;padding-bottom:0}
+.foc:first-of-type{padding-top:0}
+.foc-h{display:flex;align-items:center;gap:9px;margin-bottom:5px}
+.foc-h b{font-size:13.5px;letter-spacing:-.01em}
+.foc-p{font-size:12.5px;color:var(--ink2);line-height:1.55}
+.tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:2px 7px;border-radius:5px}
+.tag.q{background:var(--red-bg);color:var(--red-ink)}
+.tag.t{background:var(--amber-bg);color:#92400e}
+.tag.s{background:var(--indigo-bg);color:#4338ca}
+/* ---------- alerts ---------- */
+.alert{display:flex;gap:13px;align-items:flex-start;border-radius:11px;padding:15px 17px;margin-bottom:10px}
+.alert:last-child{margin-bottom:0}
+.alert.bad{background:#fef6f6;border:1px solid #fadcdc}
+.alert.warn{background:#fffbf0;border:1px solid #fbe9c4}
+.alert.ok{background:#f0f9f3;border:1px solid #cfe9d9}
+.alert.info{background:#f6f8fe;border:1px solid #dfe6f8}
+.alert-ic{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;flex:none;font-size:14px;font-weight:800}
+.alert.bad .alert-ic{background:#fbdada;color:var(--red-ink)}
+.alert.warn .alert-ic{background:#fbe6b8;color:#92400e}
+.alert.ok .alert-ic{background:#cfe9d9;color:var(--green-ink)}
+.alert.info .alert-ic{background:#dbe4fb;color:#3730a3}
+.alert b{display:block;font-size:13.5px;margin-bottom:3px;letter-spacing:-.01em}
+.alert p{margin:0;font-size:12.5px;color:var(--ink2);line-height:1.55}
+/* ---------- big three ---------- */
+.sec-t{font-size:20px;font-weight:800;letter-spacing:-.03em;margin:30px 0 15px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.b3{position:relative;padding-top:24px;overflow:hidden}
+.b3::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.b3.c1::before{background:var(--coral)}
+.b3.c2::before{background:var(--blue)}
+.b3.c3::before{background:var(--green)}
+.b3-h{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.tro{width:29px;height:29px;border-radius:9px;background:var(--amber-bg);display:grid;place-items:center;font-size:15px}
+.b3-t{font-size:16px;font-weight:800;letter-spacing:-.02em}
+.lead{display:flex;align-items:center;gap:12px;background:#f7f8fa;border-radius:11px;padding:13px 15px;margin-bottom:6px}
+.lead .who-nm{font-size:14.5px}
+.lead-v{margin-left:auto;font-size:19px;font-weight:800;letter-spacing:-.025em;font-variant-numeric:tabular-nums}
+.runner{display:flex;align-items:center;gap:11px;padding:9px 15px;font-size:13px}
+.runner .rk{width:14px}
+.runner-v{margin-left:auto;font-weight:700;font-variant-numeric:tabular-nums}
+/* ---------- hero + pace ---------- */
+.duo{display:grid;grid-template-columns:1fr 1.05fr;gap:18px;margin-top:18px}
+.hero{background:linear-gradient(120deg,#ff9878,#f2643c);border-radius:var(--r);padding:26px;color:#fff;position:relative;overflow:hidden;min-height:198px;display:flex;flex-direction:column;justify-content:space-between}
+.hero-eyebrow{font-size:11px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;opacity:.9}
+.hero-nm{font-size:27px;font-weight:800;letter-spacing:-.03em;margin-top:9px}
+.hero-mt{font-size:13.5px;opacity:.93;margin-top:5px}
+.hero-stats{display:flex;gap:38px;margin-top:20px}
+.hero-stats b{display:block;font-size:25px;font-weight:800;letter-spacing:-.03em}
+.hero-stats span{font-size:10.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;opacity:.87}
+.hero-tro{position:absolute;right:16px;bottom:-14px;font-size:118px;opacity:.16;line-height:1;pointer-events:none}
+/* ---------- bonus cards ---------- */
+.grid3b{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.bh{display:flex;align-items:center;gap:12px;margin-bottom:19px}
+.badge{margin-left:auto;font-size:11px;font-weight:700;padding:4px 11px;border-radius:20px}
+.badge.on{background:var(--green-bg);color:var(--green-ink)}
+.badge.off{background:#f0f1f3;color:var(--ink2)}
+.pay-l{font-size:10.5px;font-weight:700;color:var(--ink3);text-transform:uppercase;letter-spacing:.07em}
+.pay{font-size:34px;font-weight:800;letter-spacing:-.035em;margin:5px 0 17px}
+.ln{display:flex;align-items:center;gap:9px;padding:12px 0;border-bottom:1px dashed var(--line);font-size:13.5px}
+.ln:last-of-type{border-bottom:0}
+.ln-v{margin-left:auto;font-weight:700;font-variant-numeric:tabular-nums}
+.ln .cnt{background:var(--indigo-bg);color:#4338ca;border-radius:20px;font-size:10.5px;font-weight:700;padding:1px 8px}
+.tier{display:flex;gap:7px;margin-top:16px}
+.tr{flex:1;text-align:center;padding:9px 4px;border-radius:9px;background:#f5f6f8;border:1px solid transparent}
+.tr b{display:block;font-size:14px;font-weight:800;font-variant-numeric:tabular-nums}
+.tr span{font-size:10px;color:var(--ink3);font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.tr.now{background:var(--coral-soft);border-color:#ffd0be}
+.tr.now b{color:var(--coral2)}
+/* ---------- dims ---------- */
+.dim{display:grid;grid-template-columns:145px 1fr 52px;align-items:center;gap:13px;padding:9px 0}
+.dim-n{font-size:13px;font-weight:600;color:var(--ink2)}
+.dim-v{font-size:13px;font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
+/* ---------- daily ---------- */
+.spark{width:100%;height:74px;display:block}
+.note{font-size:12px;color:var(--ink3);line-height:1.6;margin-top:15px;padding-top:15px;border-top:1px solid var(--line2)}
+.foot{font-size:11.5px;color:var(--ink3);line-height:1.65;margin-top:26px;padding:18px 22px;background:#fff;border:1px solid var(--line);border-radius:var(--r)}
+.foot b{color:var(--ink2)}
+.hide{display:none}
+.sc-head{display:flex;align-items:center;gap:15px;margin-bottom:18px;flex-wrap:wrap}
+.sc-name{font-size:24px;font-weight:800;letter-spacing:-.03em}
+.sc-sub{font-size:13px;color:var(--ink2);margin-top:3px}
+.sc-meta{margin-left:auto;text-align:right;font-size:12px;color:var(--ink3);line-height:1.6}
+.statline{display:flex;flex-wrap:wrap;align-items:center;gap:8px 0;background:#fff;border:1px solid var(--line);
+  border-radius:11px;padding:11px 4px;margin-bottom:18px}
+.statline .st1{display:flex;align-items:baseline;gap:8px;padding:0 18px;border-left:1px solid var(--line2);white-space:nowrap}
+.statline .st1:first-child{border-left:0}
+.statline .st1 span{font-size:11.5px;font-weight:600;color:var(--ink2)}
+.statline .st1 b{font-size:17px;font-weight:800;letter-spacing:-.025em}
+.statline .st1.hi b{color:var(--coral2)}
+.ladder{background:linear-gradient(180deg,#fffdf6,#fff);border:1px solid #f0e4c2;border-radius:13px;padding:17px 20px;margin-bottom:18px}
+.ladder-h{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.ladder-h b{font-size:11px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--ink3)}
+.ladder-h .now{font-size:22px;font-weight:800;letter-spacing:-.03em;color:#b8890f}
+.ladder-h .away{margin-left:auto;font-size:12.5px;color:var(--ink2)}
+.ladder-h .away b{color:var(--ink);font-size:12.5px;letter-spacing:0;text-transform:none}
+.rungs{display:flex;gap:6px;margin-bottom:18px}
+.rung{flex:1;position:relative;padding:9px 12px;border-radius:9px;background:#f4f5f7;text-align:center}
+.rung small{display:block;font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--ink3)}
+.rung b{display:block;font-size:16px;font-weight:800;letter-spacing:-.02em;margin-top:3px;color:var(--ink2)}
+.rung.done{background:#fbf1d4}
+.rung.done small{color:#9a7b21}
+.rung.done b{color:#8a6a12}
+.rung.at{background:linear-gradient(135deg,#e8b93c,#cf9a12);box-shadow:0 2px 10px rgba(191,143,18,.32)}
+.rung.at small{color:rgba(255,255,255,.9)}
+.rung.at b{color:#fff}
+.rung.at::after{content:"YOU ARE HERE";position:absolute;left:0;right:0;bottom:-16px;font-size:8.5px;
+  font-weight:800;letter-spacing:.09em;color:#a97f13;text-align:center}
+.rung.next{background:#fff;border:1.5px dashed #e0bc63}
+.rung.next small{color:#9a7b21}
+.rung.next b{color:#b8890f}
+.kgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px}
+.kcard{position:relative;background:#fff;border:1px solid var(--line);border-radius:13px;padding:17px 18px;overflow:hidden}
+.kcard::before{content:"";position:absolute;top:0;left:0;right:0;height:3px}
+.kcard.k1::before{background:var(--coral)}
+.kcard.k2::before{background:var(--blue)}
+.kcard.k3::before{background:var(--green)}
+.kc-top{display:flex;align-items:center;gap:9px;margin-bottom:11px}
+.kc-name{font-size:11.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--ink2)}
+.kc-top .st{margin-left:auto}
+.kc-val{font-size:32px;font-weight:800;letter-spacing:-.035em;line-height:1}
+.kc-val span{font-size:19px}
+.kc-meta{font-size:12px;color:var(--ink2);margin:8px 0 11px;min-height:16px}
+.kc-meta b{color:var(--ink);font-weight:700}
+.spark-wrap{text-align:right;flex:none}
+.spark-l{font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);margin-bottom:5px}
+.obar{display:flex;height:26px;border-radius:8px;overflow:hidden;background:#eef0f2;margin-bottom:14px}
+.obar i{display:block}
+@media(max-width:900px){.kgrid{grid-template-columns:1fr}.rungs{flex-wrap:wrap}}
+.duo2{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-bottom:20px}
+.duo2>div{min-width:0}
+.pacebar{margin-bottom:0}
+.pace-cap{font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--ink3);margin-bottom:9px}
+@media(max-width:900px){.duo2{grid-template-columns:1fr;gap:22px}}
+.pace-h{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:13px}
+.pace-h .big{font-size:27px;font-weight:800;letter-spacing:-.035em;line-height:1}
+.pace-h .of{font-size:12.5px;color:var(--ink2)}
+.pace-h .badge2{margin-left:auto;font-size:11.5px;font-weight:800;padding:4px 11px;border-radius:20px}
+.pace-h .badge2.g{background:var(--green-bg);color:var(--green-ink)}
+.pace-h .badge2.r{background:var(--red-bg);color:var(--red-ink)}
+.ptrack{position:relative;height:26px;border-radius:9px;background:#eef0f2}
+.ptrack i{display:block;height:100%;border-radius:9px}
+.ptrack .over{position:absolute;inset:0;border-radius:9px;
+  background:repeating-linear-gradient(45deg,rgba(255,255,255,.3),rgba(255,255,255,.3) 5px,transparent 5px,transparent 10px)}
+.pmark{position:absolute;top:-5px;bottom:-5px;width:2px;background:var(--ink);opacity:.5;border-radius:2px}
+.pmark::after{content:attr(data-l);position:absolute;top:-16px;left:50%;transform:translateX(-50%);
+  font-size:9px;font-weight:800;letter-spacing:.05em;color:var(--ink2);white-space:nowrap}
+.pace-foot{display:flex;justify-content:space-between;font-size:11.5px;color:var(--ink3);margin-top:10px}
+.statline .st1{flex:1 1 0;justify-content:space-between}
+.fix{display:flex;gap:13px;align-items:flex-start;background:#fffaf0;border:1px solid #f6e0b0;
+  border-radius:12px;padding:15px 18px;margin-bottom:18px}
+.fix-ic{width:26px;height:26px;border-radius:8px;background:#fbe6b8;color:#92400e;display:grid;place-items:center;
+  font-size:14px;font-weight:800;flex:none}
+.fix-h{display:block;font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:#92400e;margin-bottom:5px}
+.fix p b{font-weight:800;color:var(--ink)}
+.fix p{margin:0;font-size:13.5px;color:var(--ink);line-height:1.5;font-weight:600}
+.fix.ok{background:#f2fbf5;border-color:#cfe9d9}
+.fix.ok .fix-ic{background:#cfe9d9;color:var(--green-ink)}
+.fix.ok .fix-h{color:var(--green-ink)}
+table.pace td{padding:10px 10px;font-size:13px}
+table.pace td:last-child{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+
+.pillbad{background:var(--red-bg);color:var(--red-ink)}
+.pillgood{background:var(--green-bg);color:var(--green-ink)}
+.st{display:inline-block;font-size:11px;font-weight:800;padding:3px 11px;border-radius:20px}
+@media print{
+  @page{size:A4;margin:14mm}
+  body{background:#fff}
+  .noprint,.tabs,.head-r,.pills,.rng,.toast{display:none!important}
+  section:not(#people){display:none!important}
+  #people{display:block!important}
+  .card,.panel{break-inside:avoid;box-shadow:none}
+  .two{grid-template-columns:1fr 1fr!important}
+  h1{font-size:20px}
+}
+.admin-bar{display:flex;align-items:center;gap:14px;margin-bottom:18px;flex-wrap:wrap;background:#fafbff;border-color:#e4e8fb}
+.admin-actions{margin-left:auto;display:flex;align-items:center;gap:10px}
+.btn.primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+.btn.primary:hover{background:#000}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.dirty{display:none;font-size:11.5px;font-weight:700;color:#92400e;background:var(--amber-bg);padding:4px 10px;border-radius:20px}
+.dirty.on{display:inline-block}
+.fld label{display:block;font-size:12px;font-weight:700;color:var(--ink2);margin-bottom:7px}
+.fld small{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--ink3);margin-top:7px}
+.inp{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:10px;padding:11px 14px;background:#fff}
+.inp:focus-within{border-color:var(--indigo);box-shadow:0 0 0 3px #eef2ff}
+.inp input{border:0;outline:0;font:inherit;font-size:16px;font-weight:700;width:100%;color:var(--ink);background:none}
+.inp span{font-size:13px;font-weight:600;color:var(--ink3);flex:none}
+.inp.bad{border-color:var(--red);box-shadow:0 0 0 3px #fde8e8}
+input.mini,input.cell{border:1px solid var(--line);border-radius:7px;padding:5px 8px;font:inherit;font-size:12.5px;
+  font-weight:700;color:var(--ink);background:#fff;width:74px;outline:0;font-variant-numeric:tabular-nums}
+input.cell{width:96px;font-size:13.5px;padding:7px 10px}
+input.mini:focus,input.cell:focus,select.cell:focus{border-color:var(--indigo);box-shadow:0 0 0 3px #eef2ff}
+input.cell.bad{border-color:var(--red);background:#fff7f7}
+select.cell{border:1px solid var(--line);border-radius:7px;padding:7px 9px;font:inherit;font-size:13px;font-weight:600;background:#fff;color:var(--ink);cursor:pointer;outline:0}
+.tgl{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.tgl button{border:0;background:#fff;font:inherit;font-size:12px;font-weight:700;padding:6px 13px;cursor:pointer;color:var(--ink3)}
+.tgl button.on{background:var(--ink);color:#fff}
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(12px);background:var(--ink);color:#fff;
+  font-size:13px;font-weight:600;padding:12px 20px;border-radius:11px;opacity:0;pointer-events:none;transition:.22s;z-index:99}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:1180px){.grid4,.grid3,.grid3b{grid-template-columns:repeat(2,1fr)}.two,.duo{grid-template-columns:1fr}}
+@media(max-width:720px){.grid4,.grid3,.grid3b{grid-template-columns:1fr}.wrap{padding:20px 15px 45px}h1{font-size:25px}.kpi-val{font-size:31px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+:focus-visible{outline:2px solid var(--indigo);outline-offset:2px;border-radius:6px}
+</style>
+
+<div class="wrap">
+  <div class="head">
+    <h1>Customer Success</h1>
+    <div class="head-r">
+      <div class="pills">
+        <button class="pill">Today</button><button class="pill">WTD</button>
+        <button class="pill on">MTD</button><button class="pill">QTD</button><button class="pill">Custom</button>
+      </div>
+      <div class="rng" id="rng">
+        <input type="date" id="d1" value="2026-08-01" min="2026-08-06" max="2026-08-25" aria-label="From">
+        <span>→</span>
+        <input type="date" id="d2" value="2026-08-25" min="2026-08-06" max="2026-08-25" aria-label="To">
+      </div>
+      <button class="btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 21h16"/></svg>
+        Export
+      </button>
+    </div>
+  </div>
+
+  <div class="tabs" role="tablist">
+    <button class="tab on" data-t="dash" role="tab">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+      Overview
+    </button>
+    <button class="tab" data-t="people" role="tab">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.4"/><path d="M3 20a6 6 0 0 1 12 0M17 11.2a3 3 0 0 0 0-5.9M18.5 20a5.6 5.6 0 0 0-2.6-4.7"/></svg>
+      Agent Performance
+    </button>
+    <button class="tab" data-t="refunds" role="tab">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9.5 12 4l9 5.5v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-9Z"/><path d="M9 13.5h6M12 16.4V10.6"/></svg>
+      Refunds
+    </button>
+    <button class="tab" data-t="bonus" role="tab">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.8h4.2a1.9 1.9 0 0 1 0 3.8H9.5"/></svg>
+      Bonus
+    </button>
+    <button class="tab" data-t="setup" role="tab">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1V21a2 2 0 1 1-4 0v-.1A1.6 1.6 0 0 0 7.5 19.4l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.6 1.6 0 0 0 3 15H3a2 2 0 1 1 0-4h.1A1.6 1.6 0 0 0 4.6 8.5l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1A1.6 1.6 0 0 0 10 4.6V3a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 2.7 1.1l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0 1.1 2.7H21a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1.3Z"/></svg>
+      Setup
+    </button>
+    <button class="tab" data-t="flags" role="tab">Data health <span class="cnt">7</span></button>
+  </div>
+
+  <!-- ============ OVERVIEW ============ -->
+  <section id="dash">
+
+    <h2 class="sec-t first">Service health</h2>
+    <div class="grid4" style="margin-bottom:18px">
+      <div class="card mtd-only">
+        <div class="kpi-lbl"><span class="dot" style="background:var(--green)"></span>CSAT<span class="snap" title="Month-to-date figure from the ratings feed. Does not follow the date filter.">Aug snapshot</span></div>
+        <div class="kpi-val">4.87<span style="font-size:23px">/5</span></div>
+        <div class="kpi-sub">363 surveys returned</div>
+        <div class="meter-row"><span>Target <b>4.80</b></span><b class="g">101%</b></div>
+        <div class="meter"><i class="f-green" style="width:100%"></i></div>
+      </div>
+      <div class="card">
+        <div class="kpi-lbl"><span class="dot" style="background:var(--coral)"></span>Call quality</div>
+        <div class="kpi-val"><span id="kQual">81.9</span><span style="font-size:23px">%</span></div>
+        <div class="kpi-sub" id="kAskSub">&mdash;</div>
+        <div class="meter-row"><span>Target <b id="qTarget">90%</b></span><b id="kAsk">91%</b></div>
+        <div class="meter"><i class="f-coral" id="kAskBar" style="width:91%"></i></div>
+      </div>
+      <div class="card mtd-only">
+        <div class="kpi-lbl"><span class="dot" style="background:var(--amber)"></span>Time to close<span class="snap" title="Month-to-date figure from Zoho Desk. Does not follow the date filter.">Aug snapshot</span></div>
+        <div class="kpi-val">07:24</div>
+        <div class="kpi-sub">Zoho reports resolution time, not first response</div>
+        <div class="meter-row"><span>Fastest <b>05:47</b> &middot; slowest <b>15:13</b></span><b>2.6&times; spread</b></div>
+        <div class="meter range"><i style="width:17%"></i><b class="pin" style="left:17%"></b></div>
+      </div>
+      <div class="card">
+        <div class="kpi-lbl"><span class="dot" style="background:var(--red)"></span>Calls not resolved</div>
+        <div class="kpi-val" id="ceUn">50</div>
+        <div class="kpi-sub" id="ceUnSub">&mdash;</div>
+        <div class="meter-row"><span>Share of scored calls</span><b id="ceUnPct" class="r">5.9%</b></div>
+        <div class="meter"><i class="f-red" id="ceUnBar" style="width:5.9%"></i></div>
+      </div>
+    </div>
+
+
+    <h2 class="sec-t">Standings</h2>
+    <div class="card" id="floorCard">
+      <div class="card-h">
+        <div>
+          <div class="card-s" style="margin-top:2px">Every person working the queue. Click a column to sort.</div>
+        </div>
+        <div class="find">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input id="findAgent" placeholder="Find a person" aria-label="Find a person">
+        </div>
+      </div>
+      <table class="rank">
+        <thead><tr>
+          <th style="width:26px">#</th>
+          <th data-k="name">Person</th>
+          <th data-k="tk" class="ctr">Tickets</th>
+          <th data-k="calls" class="ctr">Calls</th>
+          <th class="num">In / Out</th>
+          <th data-k="resH" class="num">Time to close</th>
+          <th data-k="q" class="num">Quality</th>
+          <th data-k="rt" class="num">Rating</th>
+        </tr></thead>
+        <tbody id="standings"></tbody>
+      </table>
+      <div class="note" id="floorNote"></div>
+    </div>
+
+    <h2 class="sec-t">Volume</h2>
+    <div class="grid4">
+      <div class="card mtd-only">
+        <div class="kpi-lbl"><span class="dot" style="background:var(--coral)"></span>Calls handled<span class="snap" title="Month-to-date figure from Zoho Voice. Does not follow the date filter.">Aug snapshot</span></div>
+        <div class="kpi-val">2,704</div>
+        <div class="kpi-sub">159 per working day</div>
+        <div class="meter-row"><span>1,737 inbound &middot; 967 outbound</span><b>64% in</b></div>
+        <div class="meter split"><i style="width:64%;background:var(--blue)"></i><i style="width:36%;background:var(--coral)"></i></div>
+      </div>
+      <div class="card mtd-only">
+        <div class="kpi-lbl"><span class="dot" style="background:var(--blue)"></span>Tickets completed<span class="snap" title="Month-to-date figure from Zoho Desk. Does not follow the date filter.">Aug snapshot</span></div>
+        <div class="kpi-val">4,559</div>
+        <div class="kpi-sub">268 per working day &middot; 912 per person</div>
+      </div>
+      <div class="card mtd-only">
+        <div class="kpi-lbl"><span class="dot" style="background:var(--green)"></span>Surveys completed<span class="snap" title="Month-to-date figure from the ratings feed. Does not follow the date filter.">Aug snapshot</span></div>
+        <div class="kpi-val">363</div>
+        <div class="kpi-sub">of 1,737 inbound calls &middot; outbound excluded</div>
+        <div class="meter-row"><span>Returned per inbound call</span><b class="a">21%</b></div>
+        <div class="meter"><i class="f-amber" style="width:21%"></i></div>
+      </div>
+      <div class="card">
+        <div class="kpi-lbl"><span class="dot" style="background:var(--indigo)"></span>Rating asked</div>
+        <div class="kpi-val"><span id="tpAsk">41</span><span style="font-size:23px">%</span></div>
+        <div class="kpi-sub" id="tpAskSub">&mdash;</div>
+        <div class="meter-row"><span>Share of scored calls with an ask</span><b id="tpAskLbl">41%</b></div>
+        <div class="meter"><i class="f-amber" id="tpAskBar" style="width:41%"></i></div>
+      </div>
+    </div>
+
+    <h2 class="sec-t">Where the work goes</h2>
+    <div class="two">
+      <div class="card">
+        <div class="card-t">Why people call</div>
+        <div class="card-s" style="margin-bottom:6px">Top five reasons, classified from 843 call summaries</div>
+        <table class="reasons">
+          <thead><tr><th class="num" style="width:26px">#</th><th>Reason</th><th class="num">Calls</th><th>Share</th><th class="num">Unresolved</th><th class="num">Avg length</th></tr></thead>
+          <tbody id="reasons"></tbody>
+        </table>
+        <div class="note">Classified with keyword rules against the AI call summaries, then hand-checked per bucket. Listing edits and photo or document upload failures are counted together: 35 calls used both kinds of language, and the split was arbitrary. A further 10.6% stayed uncategorised. Solid ranks, approximate percentages.</div>
+      </div>
+      <div class="card">
+        <div class="card-t">How calls end</div>
+        <div class="card-s">Outcome of every scored call in range</div>
+        <div class="flow-hero">
+          <div><span id="flowPct">70.9</span><span class="pc">%</span></div>
+          <p>resolved on the call, <b id="flowN">598</b> of <b id="flowT">843</b></p>
+        </div>
+        <div id="flowBar" style="margin-top:16px"></div>
+        <div id="flowLegend" style="margin-top:16px"></div>
+      </div>
+    </div>
+
+
+    <div class="card">
+        <div class="card-t">Watchlist</div>
+        <div class="card-s" style="margin-bottom:16px">Flagged automatically from this month's numbers</div>
+        <div class="alert bad">
+          <div class="alert-ic">!</div>
+          <div><b>Bonus rewards ticket volume, not same-day closing</b>
+          <p>KPI 2 pays on hitting a monthly ticket count, but the actual goal is closing same day. As written, an agent can miss every same-day close and still earn the KPI by working through a backlog. Worth resolving before the next bonus period.</p></div>
+        </div>
+        <div class="alert bad">
+          <div class="alert-ic">!</div>
+          <div><b>One person closed 52% of every ticket</b>
+          <p>Kenneth handled 2,384 of 4,559. Next is Giebelle at 1,004. If he takes leave the queue has no second pair of hands, and it is why his goal reads 169% attained while two others sit under 70%.</p></div>
+        </div>
+        <div class="alert bad">
+          <div class="alert-ic">&#9650;</div>
+          <div><b>Tickets and calls have split into two jobs</b>
+          <p>Kenneth is 52% of tickets but 25% of calls. Giebelle is 36% of calls but 22% of tickets. Nobody appears to have decided this, and it makes both of them hard to cover.</p></div>
+        </div>
+        <div class="alert warn">
+          <div class="alert-ic">&#9650;</div>
+          <div><b>Andrys takes 2.6x longer to close than Kenneth</b>
+          <p>15h13m against 5h47m, while handling a fifth of Kenneth's tickets. He also has the best quality score on the team at 84.6%, so this may be thoroughness rather than a problem. Worth asking before treating it as one.</p></div>
+        </div>
+        <div class="alert warn">
+          <div class="alert-ic">&#9650;</div>
+          <div><b>Survey coverage is thin</b>
+          <p>Agents ask for a rating on 41% of scored calls and only 363 came back against 2,704 total. Giebelle asks on 19% of hers and her 4.90 rests on 50 responses.</p></div>
+        </div>
+    </div>
+
+  </section>
+
+  <!-- ============ AGENT PERFORMANCE (admin only) ============ -->
+  <section id="people" class="hide">
+    <div class="card admin-bar noprint">
+      <div class="alert-ic" style="background:#dbe4fb;color:#3730a3">&#128100;</div>
+      <div>
+        <b style="font-size:14px;letter-spacing:-.01em">Agent scorecard</b>
+        <p style="margin:3px 0 0;font-size:12.5px;color:var(--ink2)">One agent at a time. Figures follow the date range above, except the rating, which is month to date.</p>
+      </div>
+      <div class="admin-actions">
+        <select class="sel" id="scAgent"></select>
+        <button class="btn primary" id="btnPdf">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 21h16"/></svg>
+          Export PDF
+        </button>
+      </div>
+    </div>
+
+    <div id="sheet">
+      <div class="sc-head">
+        <div id="scWho"></div>
+        <div class="sc-meta" id="scMeta"></div>
+      </div>
+
+      <div class="ladder" id="scLadder"></div>
+
+      <div class="kgrid" id="scKpis"></div>
+
+      <div class="fix" id="scFix"></div>
+
+      <div class="card" style="margin-bottom:18px">
+        <div class="card-t">Pace &amp; survey behaviour</div>
+        <div class="card-s" style="margin-bottom:16px">Whether the ticket pace is keeping up with the month, and whether ratings are being asked for</div>
+        <div class="duo2">
+          <div id="scPaceBar"></div>
+          <div id="scAskBar"></div>
+        </div>
+        <div class="statline" id="scPace" style="margin-bottom:0"></div>
+        <div class="note">Each marker is the benchmark that half is judged against: how much of the month has gone, and the team&rsquo;s own ask rate. Every scored call is inbound, because the scoring pipeline only pulls incoming calls. So the ask rate is a true inbound rate. Surveys returned is a month-to-date figure over a wider set of calls than the ones scored in this range, so the two are not a ratio.</div>
+      </div>
+
+      <div class="two" style="margin-bottom:18px">
+        <div class="card">
+          <div class="card-h">
+            <div><div class="card-t">Quality breakdown</div>
+            <div class="card-s">Where the points are going. Work the reddest row first.</div></div>
+            <div class="spark-wrap"><div class="spark-l">Daily trend</div><div id="scSpark"></div></div>
+          </div>
+          <table class="reasons" style="margin-top:14px"><thead><tr><th>Dimension</th><th class="num">Max</th><th class="num">Avg</th><th>% of max</th></tr></thead>
+          <tbody id="scDims"></tbody></table>
+        </div>
+        <div class="card">
+          <div class="card-t">Risk flags raised</div>
+          <div class="card-s" style="margin-bottom:6px">Share of their scored calls</div>
+          <table class="reasons"><thead><tr><th>Flag</th><th class="num">Calls</th><th>Share</th></tr></thead>
+          <tbody id="scFlags"></tbody></table>
+        </div>
+      </div>
+
+      <div class="two even">
+        <div class="card">
+          <div class="card-t">Call outcome mix</div>
+          <div class="card-s" style="margin-bottom:14px">How their calls ended</div>
+          <div id="scOutBar"></div>
+          <table class="reasons"><tbody id="scOut"></tbody></table>
+        </div>
+        <div class="panel indigo">
+          <div class="card-t">What to raise in the 1:1</div>
+          <div class="card-s" style="margin-bottom:12px">Drawn from the numbers above</div>
+          <div id="scFocus"></div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ============ REFUNDS & CANCELLATIONS ============ -->
+  <section id="refunds" class="hide">
+    <div class="card" style="margin-bottom:18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+      <div class="alert-ic" style="background:#fbe6b8;color:#92400e">&#9650;</div>
+      <div>
+        <b style="font-size:14px;letter-spacing:-.01em">Nothing feeds this tab yet</b>
+        <p style="margin:3px 0 0;font-size:12.5px;color:var(--ink2)">Every figure below is a placeholder until a refund export reaches the dashboard.</p>
+      </div>
+    </div>
+    <div class="grid4">
+      <div class="card">
+        <div class="kpi-lbl"><span class="dot" style="background:var(--ink3)"></span>Refund requests</div>
+        <div class="kpi-val todo">&mdash;</div>
+        <div class="kpi-sub">19 calls flagged as a billing or refund dispute</div>
+        <div class="meter-row"><span>Requests logged</span><b class="todo">Not tracked</b></div>
+        <div class="meter empty"></div>
+      </div>
+      <div class="card">
+        <div class="kpi-lbl"><span class="dot" style="background:var(--ink3)"></span>Amount refunded</div>
+        <div class="kpi-val todo">&mdash;</div>
+        <div class="kpi-sub">No dollar figures reach this dashboard</div>
+        <div class="meter-row"><span>This period</span><b class="todo">Not tracked</b></div>
+        <div class="meter empty"></div>
+      </div>
+      <div class="card">
+        <div class="kpi-lbl"><span class="dot" style="background:var(--ink3)"></span>Cancellations</div>
+        <div class="kpi-val todo">&mdash;</div>
+        <div class="kpi-sub">72 calls classified as cancel, withdraw or relist</div>
+        <div class="meter-row"><span>Listings cancelled</span><b class="todo">Not tracked</b></div>
+        <div class="meter empty"></div>
+      </div>
+      <div class="card">
+        <div class="kpi-lbl"><span class="dot" style="background:var(--ink3)"></span>Save rate</div>
+        <div class="kpi-val todo">&mdash;</div>
+        <div class="kpi-sub">Share of at-risk customers retained</div>
+        <div class="meter-row"><span>Retained</span><b class="todo">Not tracked</b></div>
+        <div class="meter empty"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-t">Refund reasons</div>
+      <div class="card-s" style="margin-bottom:16px">Why customers asked for money back</div>
+      <div class="wire">
+        <b>Nothing feeds this yet</b>
+        <p>To fill this container, one export needs to reach the dashboard: refund requests with a date, an amount, a reason code and the agent who handled it, plus whether the customer stayed. Until then these four cards and this panel stay empty rather than showing a number nobody can trace.</p>
+        <p style="margin-top:9px">The call feed already flags 19 billing or refund disputes and 72 cancellation calls in range, which is a starting point for reason codes but is call volume, not refund outcomes.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BONUS ============ -->
+  <section id="bonus" class="hide">
+    <div class="card" style="background:var(--indigo-bg);border-color:#dfe3fa;display:flex;align-items:center;gap:15px;margin-bottom:18px;flex-wrap:wrap">
+      <div style="width:34px;height:34px;border-radius:10px;background:#fff;display:grid;place-items:center">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--indigo)" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.8h4.2a1.9 1.9 0 0 1 0 3.8H9.5"/></svg>
+      </div>
+      <div><div style="font-weight:700;font-size:14.5px">Bonus period</div>
+      <div style="font-size:12.5px;color:var(--ink2);margin-top:2px">Aug 1 → Aug 31 · as of Aug 25 · working day 17 of 21</div></div>
+      <div style="margin-left:auto;display:flex;gap:9px;align-items:center;flex-wrap:wrap">
+        <span class="chip flat">Quality 90%</span><span class="chip flat">Tickets 100%</span><span class="chip flat">Rating 4.8</span>
+      </div>
+    </div>
+    <div class="grid3b" id="bonusCards"></div>
+    <div class="foot">
+      <b>How it pays.</b> Each KPI met raises the tier. Overseas pays $500 / $350 / $200 / $0 for 3, 2, 1 and 0 KPIs. Miami pays $750 / $525 / $300 / $0. Thresholds are identical for both teams.<br>
+      <b>Confirm before payout.</b> The Miami mid-tiers ($525 and $300) are derived from the Overseas 70% / 40% ratio, not confirmed by management. Only the $750 top tier is confirmed.
+    </div>
+  </section>
+
+  <!-- ============ SETUP (admin only) ============ -->
+  <section id="setup" class="hide">
+
+    <div class="card admin-bar">
+      <div class="alert-ic" style="background:#dbe4fb;color:#3730a3">&#9881;</div>
+      <div>
+        <b style="font-size:14px;letter-spacing:-.01em">Admin settings</b>
+        <p style="margin:3px 0 0;font-size:12.5px;color:var(--ink2)">Changes here drive the Bonus tab and every KPI on this page. They apply to the whole team.</p>
+      </div>
+      <div class="admin-actions">
+        <span class="dirty" id="dirty">Unsaved changes</span>
+        <button class="btn" id="btnReset">Reset</button>
+        <button class="btn primary" id="btnSave">Save changes</button>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:18px">
+      <div class="card-t">Targets</div>
+      <div class="card-s" style="margin-bottom:18px">The bar for each KPI. Identical across both bonus plans.</div>
+      <div class="grid3">
+        <div class="fld">
+          <label for="setQual">Quality score</label>
+          <div class="inp"><input type="number" id="setQual" value="90" min="0" max="100" step="1"><span>%</span></div>
+          <small>Minimum scored calls to count <input type="number" id="setMinCalls" value="1" min="0" step="1" class="mini"></small>
+        </div>
+        <div class="fld">
+          <label for="setTk">Ticket goal attainment</label>
+          <div class="inp"><input type="number" id="setTk" value="100" min="0" max="500" step="1"><span>%</span></div>
+          <small>Closed tickets only</small>
+        </div>
+        <div class="fld">
+          <label for="setRt">Customer rating</label>
+          <div class="inp"><input type="number" id="setRt" value="4.8" min="0" max="5" step="0.1"><span>/ 5</span></div>
+          <small>Minimum surveys to count <input type="number" id="setMinSv" value="1" min="0" step="1" class="mini"></small>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:18px">
+      <div class="card-t">What each tier pays</div>
+      <div class="card-s" style="margin-bottom:6px">Payout per plan, by number of KPIs met</div>
+      <table>
+        <thead><tr><th>Plan</th><th>3 of 3</th><th>2 of 3</th><th>1 of 3</th><th>0 of 3</th><th>Status</th></tr></thead>
+        <tbody id="tierTbl"></tbody>
+      </table>
+      <div class="note">The Miami mid-tiers were derived from the Overseas 70% / 40% ratio, not confirmed by management. Only the $750 top tier is confirmed. Replace them here once you have the real figures.</div>
+    </div>
+
+    <div class="card" style="margin-bottom:18px">
+      <div class="card-t">Monthly goals by person</div>
+      <div class="card-s" style="margin-bottom:6px">Goals vary by experience, schedule, vacation and business volume. Set them each month.</div>
+      <table>
+        <thead><tr>
+          <th>Person</th><th>Plan</th><th>Monthly ticket goal</th><th>Closed so far</th><th>On pace</th><th>Eligible</th>
+        </tr></thead>
+        <tbody id="goalTbl"></tbody>
+      </table>
+      <div class="note">Set eligibility to No for disciplinary action, policy violation, metric manipulation, falsified or incorrectly closed tickets, or attendance issues. An ineligible person still appears on the floor but is excluded from bonus.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-t">Scoring weights</div>
+      <div class="card-s" style="margin-bottom:18px">Points each dimension contributes to the call quality score. Must total 100.</div>
+      <div class="grid4" id="wtGrid" style="margin-bottom:0"></div>
+      <div class="note" id="wtNote"></div>
+    </div>
+  </section>
+
+  <!-- ============ DATA HEALTH ============ -->
+  <section id="flags" class="hide">
+    <div class="card">
+      <div class="card-t">Data health</div>
+      <div class="card-s" style="margin-bottom:16px">Things to fix before these numbers drive a payout</div>
+      <div class="alert warn">
+        <div class="alert-ic">&#9650;</div>
+        <div><b>Only about half of inbound calls get scored</b>
+        <p>The scoring pipeline pulls incoming calls only, so every scored call is inbound and the ask rates on this page are true inbound rates. But 843 calls were scored between 6 and 25 August against roughly 1,737 inbound calls for the month. Part of that is the later start date and the 41 excluded non-CS calls; the rest is unexplained. Worth confirming whether unrecorded or very short calls are being skipped before treating the quality score as representative of every call.</p></div>
+      </div>
+      <div class="alert warn">
+        <div class="alert-ic">&#9650;</div>
+        <div><b>Nothing on this page measures open or unresolved tickets</b>
+        <p>"Calls not resolved" counts call outcomes from the scoring feed, not tickets. Zoho reports total and closed ticket counts but no open, ageing or reopened figure reaches the dashboard, so a ticket can sit unresolved for a week without appearing anywhere here.</p></div>
+      </div>
+      <div class="alert bad">
+        <div class="alert-ic">!</div>
+        <div><b>Same-day close rate is not being captured</b>
+        <p>It is the team's actual goal and nothing here can measure it. Average resolution time is the closest proxy and it is not the same thing: an agent averaging 6 hours could still be closing a third of their tickets the next morning. To fix it, export per-ticket created and closed timestamps from Zoho Desk and compare the calendar dates, or the business hours elapsed if closes after 6pm should still count.</p></div>
+      </div>
+      <div class="alert bad">
+        <div class="alert-ic">!</div>
+        <div><b>Ticket attribution matches only 26% of rows</b>
+        <p>16,654 ticket rows loaded, 4,272 matched to a roster agent. 12,360 match no surname. Zoho also shows a "beycome beycome" system account holding 12,472 closed tickets, which likely accounts for most of the gap. Every ticket figure here rests on the matched quarter.</p></div>
+      </div>
+      <div class="alert bad">
+        <div class="alert-ic">!</div>
+        <div><b>Ticket goals look mis-set, not missed</b>
+        <p>Warren and Giebelle need 122 and 108 tickets a day for 4 days against recent output of 11 and 60. Kenneth is at 169% of his. Goals that far apart usually mean the goal is wrong, not the agent. Worth reviewing before this month closes.</p></div>
+      </div>
+      <div class="alert warn">
+        <div class="alert-ic">▲</div>
+        <div><b>Paid hours disagree between sheets</b>
+        <p>For Monday 24 Aug the Recap shows 42.5 hours across 5 people and the Trend tab shows 66.5 across 7. Tickets per hour moves materially depending on which is right. The Recap figure is used here.</p></div>
+      </div>
+      <div class="alert info">
+        <div class="alert-ic">i</div>
+        <div><b>Asly is on the floor but not on the bonus roster</b>
+        <p>She closed 69 tickets and took 20 calls this month, and appears in the daily log, but carries no bonus plan, ticket goal or call scoring. She is excluded from every bonus and quality figure here.</p></div>
+      </div>
+      <div class="alert ok">
+        <div class="alert-ic">✓</div>
+        <div><b>Ratings are live</b>
+        <p>377 rating values loaded, 363 matched to a roster agent. KPI 3 is now wired despite the handbook note saying otherwise.</p></div>
+      </div>
+    </div>
+  </section>
+
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const AGENTS=[
+ {n:"Andrys Vargas",i:"AV",g:"g1",plan:"Miami",team:"Customer Service",q:84.63,calls:423,cin:372,cout:51,tk:431,goalTk:378,goal:350,res:"15:13",resH:15.2,rt:4.92,sv:98,ask:51.6,kpi:2,bonus:525,base:300,mid:525,top:750,pace:"+95 ahead",scored:193,
+  dims:[83.6,80.5,86.4,90.2],flags:[29,17,3,6],
+  focus:"Needs +5.4 quality points to reach 90%. Slowest resolution of the four scored agents at 15:13."},
+ {n:"Kenneth Vanegas",i:"KV",g:"g4",plan:"Overseas",team:"Customer Service",q:80.37,calls:675,cin:401,cout:274,tk:2384,goalTk:2286,goal:1350,res:"05:47",resH:5.8,rt:4.84,sv:110,ask:57.8,kpi:2,bonus:350,base:200,mid:350,top:500,pace:"+1,193 ahead",scored:159,
+  dims:[80.2,75.7,80.3,86.7],flags:[35,28,8,17],
+  focus:"Carrying 46% of team tickets at the fastest resolution time. Quality is his only remaining gap at +9.6 points."},
+ {n:"Giebelle Abella",i:"GA",g:"g3",plan:"Overseas",team:"Customer Service",q:80.85,calls:983,cin:481,cout:502,tk:1004,goalTk:918,goal:1350,res:"07:17",resH:7.3,rt:4.90,sv:50,ask:19.1,kpi:1,bonus:200,base:200,mid:350,top:500,pace:"\u2212432 behind",scored:267,
+  dims:[80.3,75.6,82.9,86.7],flags:[54,44,9,27],
+  focus:"Highest call volume on the team and the lowest ask rate at 19%. Her 4.90 rating rests on only 50 surveys."},
+ {n:"Warren Mckray",i:"WM",g:"g2",plan:"Overseas",team:"Customer Service",q:81.78,calls:603,cin:463,cout:140,tk:671,goalTk:660,goal:1150,res:"07:47",resH:7.8,rt:4.81,sv:105,ask:84.3,kpi:1,bonus:200,base:200,mid:350,top:500,pace:"\u2212490 behind",scored:224,
+  dims:[83.1,75.9,82.0,87.5],flags:[49,40,9,21],
+  focus:"Best ask rate on the team at 84%. Most inbound-weighted, 463 in against 140 out. 490 tickets short of goal."},
+ {n:"Asly Calix",i:"AC",g:"g5",plan:"\u2014",team:"Not scored",q:null,calls:20,cin:20,cout:0,tk:69,goalTk:null,goal:null,res:"12:27",resH:12.5,rt:null,sv:0,ask:null,kpi:null,bonus:null,scored:0,dims:null,flags:null,focus:null}
+];
+const ROSTER=AGENTS.filter(a=>a.q!==null);
+const DIMNAMES=["Correct Information","Resolution","Ownership","Professionalism"];
+const REASONS=[
+ ["Seller cannot change their own listing",169,20.0,3.0,"6.6 min"],
+ ["Outside party needs the seller's contact info",158,18.7,3.8,"3.9 min"],
+ ["Offers, contracts & closing paperwork",78,9.3,7.7,"6.5 min"],
+ ["Cancellation / withdrawal / relist",72,8.5,5.6,"6.8 min"],
+ ["MLS activation delay / listing not live",70,8.3,1.4,"6.2 min"]
+];
+const $=s=>document.querySelector(s);
+const setT=(id,v)=>{const e=$("#"+id); if(e)e.textContent=v;};
+const setW=(id,w,c)=>{const e=$("#"+id); if(e){e.style.width=w; if(c)e.className=c;}};
+const av=(a,sz,fs)=>`<div class="av ${a.g}" style="width:${sz}px;height:${sz}px;font-size:${fs}px">${a.i}</div>`;
+const qcls=v=>v>=90?"g":v>=85?"a":"r";
+
+let SORT={k:"tk",dir:-1}, FIND="";
+const TROPHY='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10v5a5 5 0 0 1-10 0V4Z"/><path d="M17 5h2.5a2.5 2.5 0 0 1 0 5H17M7 5H4.5a2.5 2.5 0 0 0 0 5H7"/><path d="M12 14v3M9 20h6M10 17h4"/></svg>';
+/* medals only make sense when the sort is a performance measure */
+function rankMark(x){
+  if(SORT.k==="name"||x>2) return `<span class="rk-badge">${x+1}</span>`;
+  if(x===0) return `<span class="medal m1" title="1st">${TROPHY}</span>`;
+  return `<span class="medal m${x+1}" title="${x+1===2?"2nd":"3rd"}">${x+1}</span>`;
+}
+function standings(){
+  const mx=Math.max(...AGENTS.map(a=>a.tk))||1, mc=Math.max(...AGENTS.map(a=>a.calls))||1;
+  const val=(a,k)=>k==="name"?a.n.toLowerCase():(a[k]===null||a[k]===undefined?-Infinity:a[k]);
+  const sorted=[...AGENTS].sort((a,b)=>{
+    const x=val(a,SORT.k), y=val(b,SORT.k);
+    if(x<y)return -1*SORT.dir; if(x>y)return 1*SORT.dir; return 0;});
+  const term=FIND.trim().toLowerCase();
+  $("#standings").innerHTML=sorted.map((a,x)=>{
+    const hit=!term||a.n.toLowerCase().includes(term);
+    return `<tr class="${hit?"":"dim"}">
+      <td>${rankMark(x)}</td>
+      <td><div class="who">${av(a,32,10)}<div><div class="who-nm">${a.n}</div>
+        <div class="who-mt">${a.scored?a.scored+" calls scored":"not scored"}</div></div></div></td>
+      <td><div class="bar-cell"><div class="meter"><i class="f-coral" style="width:${a.tk/mx*100}%"></i></div>
+        <span>${a.tk.toLocaleString()}</span></div></td>
+      <td><div class="bar-cell"><div class="meter"><i class="f-green" style="width:${a.calls/mc*100}%"></i></div>
+        <span>${a.calls.toLocaleString()}</span></div></td>
+      <td class="num mono" style="color:var(--ink2)">${a.calls?`${a.cin} / ${a.cout}`:"\u2014"}</td>
+      <td class="num mono ${a.resH>=24?"r":a.resH>=12?"a":"g"}" style="font-weight:700">${a.res}</td>
+      <td class="num mono ${a.q===null?"":qcls(a.q)}" style="font-weight:700">${a.q===null?'<span style="color:var(--ink3);font-weight:500">\u2014</span>':a.q.toFixed(1)+"%"}</td>
+      <td class="num mono ${a.rt===null?"":a.rt>=SAVED.rt?"g":"r"}" style="font-weight:700">${a.rt===null?'<span style="color:var(--ink3);font-weight:500">\u2014</span>':a.rt.toFixed(2)}</td>
+    </tr>`;}).join("");
+  document.querySelectorAll("table.rank th[data-k]").forEach(th=>{
+    th.classList.remove("asc","desc");
+    if(th.dataset.k===SORT.k) th.classList.add(SORT.dir===1?"asc":"desc");});
+  const shown=term?AGENTS.filter(a=>a.n.toLowerCase().includes(term)).length:AGENTS.length;
+  const nt=$("#floorNote");
+  if(nt) nt.innerHTML=(term?`Showing <b>${shown}</b> of ${AGENTS.length} matching "${FIND}". `:"")
+    +"Ticket and call totals are an August snapshot from Zoho. Quality and rating follow the date range and exist only for the scored roster.";
+}
+document.querySelectorAll("table.rank th[data-k]").forEach(th=>th.addEventListener("click",()=>{
+  const k=th.dataset.k;
+  if(SORT.k===k) SORT.dir*=-1;
+  else SORT={k,dir:(k==="name"||k==="resH")?1:-1};
+  standings();
+}));
+if($("#findAgent")) $("#findAgent").addEventListener("input",e=>{FIND=e.target.value; standings();});
+
+
+function bonusPanel(){$("#bonusCards").innerHTML=ROSTER.map(a=>`
+  <div class="card">
+    <div class="bh">${av(a,42,13)}<div><div class="who-nm" style="font-size:15px">${a.n}</div>
+      <div class="who-mt">${a.plan} plan · ${a.kpi} of 3 KPIs</div></div>
+      <span class="badge ${a.kpi>0?"on":"off"}">${a.kpi>0?"Unlocked":"Locked"}</span></div>
+    <div class="pay-l">Payout if the month ended today</div>
+    <div class="pay">$${a.bonus.toLocaleString()}</div>
+    <div class="ln"><span class="${a.q>=90?"g":"r"}" style="font-weight:800">${a.q>=90?"✓":"✕"}</span>
+      Quality Score<span class="ln-v ${a.q===null?"":qcls(a.q)}">${a.q===null?'<span style="color:var(--ink3);font-weight:500">no calls in range</span>':a.q.toFixed(1)+"%"}</span></div>
+    <div class="ln"><span class="${a.goal&&a.goalTk>=a.goal?"g":"r"}" style="font-weight:800">${a.goal&&a.goalTk>=a.goal?"✓":"✕"}</span>
+      Ticket Goal<span class="ln-v ${a.goal&&a.goalTk>=a.goal?"g":"r"}">${a.goalTk.toLocaleString()} / ${a.goal?a.goal.toLocaleString():"—"}</span></div>
+    <div class="ln"><span class="${a.rt>=4.8?"g":"r"}" style="font-weight:800">${a.rt>=4.8?"✓":"✕"}</span>
+      Customer Rating <span class="cnt">${a.sv}</span><span class="ln-v ${a.rt>=4.8?"g":"r"}">${a.rt.toFixed(2)}</span></div>
+    <div class="tier">
+      <div class="tr ${a.kpi===1?"now":""}"><b>$${a.base}</b><span>1 KPI</span></div>
+      <div class="tr ${a.kpi===2?"now":""}"><b>$${a.mid}</b><span>2 KPIs</span></div>
+      <div class="tr ${a.kpi===3?"now":""}"><b>$${a.top}</b><span>3 KPIs</span></div>
+    </div>
+    <div class="meter-row"><span>Ticket pace</span><b>${a.pace}</b></div>
+    <div class="meter"><i class="${a.goalTk>=a.goal?"f-green":"f-red"}" style="width:${a.goal?Math.min(a.goalTk/a.goal*100,100):0}%"></i></div>
+  </div>`).join("");}
+
+
+
+function reasonsPanel(){$("#reasons").innerHTML=REASONS.map((r,i)=>`<tr>
+  <td class="num rk">${i+1}</td><td class="rsn">${r[0]}</td>
+  <td class="num mono" style="font-weight:700">${r[1]}</td>
+  <td><div class="bar-cell"><div class="meter"><i class="f-coral" style="width:${(r[2]/20*100).toFixed(1)}%"></i></div>
+    <span>${r[2]}%</span></div></td>
+  <td class="num mono ${r[3]>6?"r":""}">${r[3]}%</td><td class="num mono" style="color:var(--ink2)">${r[4]}</td></tr>`).join("");}
+
+const FLOWC=[["Resolved on the call","var(--green)"],["Needs follow-up","var(--amber)"],["Unresolved","var(--red)"],["Escalated","#8b5cf6"]];
+function flowPanel(){
+  const t=[0,0,0,0]; ROSTER.forEach(a=>(a.outc||[0,0,0,0]).forEach((v,i)=>t[i]+=v));
+  const tot=t.reduce((x,y)=>x+y,0);
+  if(!tot){$("#flowBar").innerHTML='<div class="empty"><b>No calls in this range</b>Pick a wider range to see outcomes.</div>';
+    $("#flowLegend").innerHTML=""; setT("flowPct","\u2014"); setT("flowN","0"); setT("flowT","0"); return;}
+  setT("flowPct",(100*t[0]/tot).toFixed(1)); setT("flowN",t[0]); setT("flowT",tot);
+  $("#flowBar").innerHTML=`<div class="flow">${t.map((v,i)=>v?`<i style="width:${100*v/tot}%;background:${FLOWC[i][1]}" title="${FLOWC[i][0]}: ${v}"></i>`:"").join("")}</div>`;
+  $("#flowLegend").innerHTML=`<div class="flow-l">${t.map((v,i)=>
+    `<div class="flow-r"><i style="background:${FLOWC[i][1]}"></i>${FLOWC[i][0]}<b>${v}</b><span>${(100*v/tot).toFixed(1)}%</span></div>`).join("")}</div>`;
+}
+
+/* ============ date filtering ============ */
+const DQ=[{"d":"2026-08-06","a":"AV","n":13,"dm":[262.0,260.0,168.0,227.0],"o":[11,2,0,0],"f":[2,1,0,1,0,0],"k":0},{"d":"2026-08-06","a":"GA","n":17,"dm":[344.0,297.0,206.0,287.0],"o":[9,6,2,0],"f":[2,2,0,2,0,0],"k":0},{"d":"2026-08-06","a":"KV","n":7,"dm":[151.0,139.0,94.0,128.0],"o":[5,2,0,0],"f":[1,1,0,0,0,0],"k":0},{"d":"2026-08-06","a":"WM","n":15,"dm":[283.0,247.0,172.0,244.0],"o":[9,4,2,0],"f":[4,3,1,2,1,1],"k":0},{"d":"2026-08-07","a":"AV","n":19,"dm":[398.0,406.0,251.0,352.0],"o":[16,3,0,0],"f":[2,0,1,0,0,0],"k":0},{"d":"2026-08-07","a":"GA","n":14,"dm":[290.0,284.0,187.0,256.0],"o":[10,4,0,0],"f":[1,0,0,0,0,0],"k":0},{"d":"2026-08-07","a":"KV","n":10,"dm":[209.0,197.0,125.0,174.0],"o":[8,1,1,0],"f":[2,2,1,1,1,1],"k":0},{"d":"2026-08-07","a":"WM","n":14,"dm":[303.0,281.0,176.0,251.0],"o":[10,4,0,0],"f":[2,1,0,0,0,0],"k":0},{"d":"2026-08-08","a":"GA","n":15,"dm":[322.0,299.0,200.0,270.0],"o":[10,5,0,0],"f":[1,1,1,1,1,0],"k":0},{"d":"2026-08-08","a":"KV","n":10,"dm":[193.0,176.0,116.0,166.0],"o":[8,1,1,0],"f":[3,2,1,2,0,0],"k":0},{"d":"2026-08-10","a":"AV","n":12,"dm":[239.0,222.0,143.0,210.0],"o":[6,5,1,0],"f":[2,2,0,1,0,0],"k":5},{"d":"2026-08-10","a":"GA","n":16,"dm":[339.0,333.0,223.0,295.0],"o":[14,1,1,0],"f":[1,1,0,0,1,0],"k":8},{"d":"2026-08-10","a":"KV","n":11,"dm":[226.0,227.0,143.0,200.0],"o":[8,3,0,0],"f":[1,1,1,0,1,0],"k":6},{"d":"2026-08-10","a":"WM","n":11,"dm":[230.0,227.0,148.0,199.0],"o":[9,2,0,0],"f":[1,0,0,0,0,0],"k":4},{"d":"2026-08-11","a":"AV","n":16,"dm":[314.0,272.0,193.0,276.0],"o":[11,3,2,0],"f":[3,3,0,1,0,0],"k":8},{"d":"2026-08-11","a":"GA","n":19,"dm":[391.0,372.0,240.0,330.0],"o":[12,6,1,0],"f":[3,2,0,0,0,0],"k":2},{"d":"2026-08-11","a":"KV","n":10,"dm":[183.0,169.0,109.0,163.0],"o":[6,2,1,1],"f":[4,3,0,3,0,0],"k":4},{"d":"2026-08-11","a":"WM","n":12,"dm":[253.0,224.0,153.0,218.0],"o":[10,2,0,0],"f":[2,1,0,0,0,0],"k":9},{"d":"2026-08-12","a":"AV","n":16,"dm":[348.0,332.0,212.0,296.0],"o":[14,2,0,0],"f":[3,2,1,0,0,0],"k":9},{"d":"2026-08-12","a":"GA","n":19,"dm":[375.0,349.0,225.0,321.0],"o":[13,4,2,0],"f":[6,5,1,2,0,0],"k":3},{"d":"2026-08-12","a":"KV","n":6,"dm":[130.0,133.0,89.0,114.0],"o":[6,0,0,0],"f":[0,0,0,0,0,0],"k":4},{"d":"2026-08-12","a":"WM","n":14,"dm":[284.0,264.0,165.0,243.0],"o":[11,3,0,0],"f":[3,3,2,1,1,0],"k":7},{"d":"2026-08-13","a":"AV","n":18,"dm":[374.0,362.0,237.0,324.0],"o":[14,3,1,0],"f":[4,3,0,1,0,0],"k":12},{"d":"2026-08-13","a":"GA","n":13,"dm":[237.0,239.0,155.0,228.0],"o":[9,4,0,0],"f":[6,4,1,2,0,0],"k":2},{"d":"2026-08-13","a":"KV","n":12,"dm":[224.0,194.0,124.0,195.0],"o":[7,4,1,0],"f":[4,3,0,0,0,0],"k":7},{"d":"2026-08-13","a":"WM","n":21,"dm":[440.0,407.0,260.0,373.0],"o":[13,6,1,1],"f":[4,2,0,3,2,0],"k":18},{"d":"2026-08-14","a":"AV","n":15,"dm":[303.0,288.0,191.0,268.0],"o":[10,5,0,0],"f":[3,1,0,0,1,0],"k":8},{"d":"2026-08-14","a":"GA","n":24,"dm":[461.0,423.0,278.0,394.0],"o":[15,8,1,0],"f":[6,6,1,3,2,1],"k":1},{"d":"2026-08-14","a":"KV","n":3,"dm":[60.0,61.0,42.0,54.0],"o":[3,0,0,0],"f":[0,0,0,0,0,0],"k":1},{"d":"2026-08-14","a":"WM","n":20,"dm":[408.0,380.0,237.0,358.0],"o":[14,5,1,0],"f":[5,4,0,2,0,0],"k":19},{"d":"2026-08-15","a":"KV","n":7,"dm":[153.0,155.0,92.0,128.0],"o":[5,2,0,0],"f":[1,1,0,1,0,0],"k":7},{"d":"2026-08-15","a":"WM","n":8,"dm":[169.0,169.0,107.0,142.0],"o":[6,2,0,0],"f":[1,1,0,1,0,0],"k":7},{"d":"2026-08-17","a":"AV","n":16,"dm":[351.0,348.0,222.0,298.0],"o":[14,1,1,0],"f":[1,1,0,1,0,0],"k":8},{"d":"2026-08-17","a":"GA","n":24,"dm":[468.0,449.0,299.0,409.0],"o":[17,4,2,1],"f":[5,5,1,5,1,0],"k":4},{"d":"2026-08-17","a":"KV","n":14,"dm":[276.0,241.0,162.0,232.0],"o":[9,4,1,0],"f":[3,2,0,1,0,0],"k":8},{"d":"2026-08-17","a":"WM","n":18,"dm":[383.0,348.0,225.0,316.0],"o":[13,4,1,0],"f":[5,5,1,2,0,0],"k":15},{"d":"2026-08-18","a":"AV","n":17,"dm":[360.0,347.0,212.0,310.0],"o":[14,2,1,0],"f":[4,1,1,0,0,0],"k":8},{"d":"2026-08-18","a":"GA","n":17,"dm":[350.0,337.0,205.0,298.0],"o":[13,3,1,0],"f":[2,2,0,2,0,0],"k":2},{"d":"2026-08-18","a":"KV","n":17,"dm":[329.0,327.0,196.0,298.0],"o":[12,3,2,0],"f":[4,2,2,1,1,0],"k":9},{"d":"2026-08-18","a":"WM","n":14,"dm":[289.0,262.0,176.0,247.0],"o":[8,5,1,0],"f":[3,3,0,1,0,0],"k":11},{"d":"2026-08-19","a":"AV","n":8,"dm":[176.0,172.0,112.0,147.0],"o":[7,1,0,0],"f":[1,0,0,1,1,0],"k":3},{"d":"2026-08-19","a":"GA","n":16,"dm":[317.0,297.0,196.0,282.0],"o":[10,5,1,0],"f":[4,4,0,2,0,0],"k":3},{"d":"2026-08-19","a":"KV","n":12,"dm":[237.0,230.0,137.0,199.0],"o":[9,1,2,0],"f":[3,3,0,3,0,0],"k":7},{"d":"2026-08-19","a":"WM","n":21,"dm":[425.0,371.0,234.0,348.0],"o":[12,8,1,0],"f":[8,7,1,4,1,0],"k":17},{"d":"2026-08-20","a":"AV","n":12,"dm":[262.0,254.0,163.0,218.0],"o":[10,1,1,0],"f":[1,1,0,0,0,0],"k":5},{"d":"2026-08-20","a":"GA","n":15,"dm":[302.0,287.0,187.0,258.0],"o":[11,3,1,0],"f":[4,4,0,2,0,0],"k":2},{"d":"2026-08-20","a":"KV","n":8,"dm":[157.0,134.0,89.0,132.0],"o":[5,2,1,0],"f":[3,3,0,0,1,0],"k":5},{"d":"2026-08-20","a":"WM","n":18,"dm":[377.0,329.0,225.0,314.0],"o":[11,6,1,0],"f":[3,3,1,1,1,0],"k":17},{"d":"2026-08-21","a":"AV","n":15,"dm":[328.0,326.0,209.0,274.0],"o":[14,1,0,0],"f":[0,0,0,0,1,0],"k":7},{"d":"2026-08-21","a":"GA","n":20,"dm":[397.0,356.0,237.0,332.0],"o":[11,7,2,0],"f":[6,4,3,3,1,0],"k":2},{"d":"2026-08-21","a":"KV","n":11,"dm":[235.0,227.0,133.0,203.0],"o":[9,2,0,0],"f":[1,1,0,1,0,0],"k":7},{"d":"2026-08-21","a":"WM","n":21,"dm":[450.0,420.0,272.0,379.0],"o":[14,6,1,0],"f":[3,2,1,2,0,0],"k":18},{"d":"2026-08-22","a":"GA","n":15,"dm":[311.0,285.0,195.0,263.0],"o":[9,6,0,0],"f":[4,3,1,2,0,0],"k":1},{"d":"2026-08-22","a":"KV","n":5,"dm":[100.0,99.0,70.0,90.0],"o":[4,1,0,0],"f":[0,0,0,0,0,0],"k":3},{"d":"2026-08-24","a":"AV","n":16,"dm":[318.0,295.0,187.0,280.0],"o":[12,3,1,0],"f":[3,2,0,0,0,0],"k":6},{"d":"2026-08-24","a":"GA","n":21,"dm":[414.0,403.0,261.0,372.0],"o":[16,4,1,0],"f":[3,1,0,1,0,0],"k":8},{"d":"2026-08-24","a":"KV","n":15,"dm":[305.0,290.0,187.0,266.0],"o":[10,4,0,1],"f":[4,3,2,3,0,0],"k":6},{"d":"2026-08-24","a":"WM","n":15,"dm":[317.0,272.0,177.0,251.0],"o":[8,4,3,0],"f":[5,5,2,2,0,0],"k":12},{"d":"2026-08-25","a":"GA","n":2,"dm":[40.0,38.0,27.0,35.0],"o":[2,0,0,0],"f":[0,0,0,0,0,0],"k":1},{"d":"2026-08-25","a":"KV","n":1,"dm":[18.0,10.0,8.0,16.0],"o":[0,0,1,0],"f":[1,1,1,1,0,0],"k":0},{"d":"2026-08-25","a":"WM","n":2,"dm":[45.0,47.0,29.0,38.0],"o":[2,0,0,0],"f":[0,0,0,0,0,0],"k":2}];
+const DATA_MIN="2026-08-06", DATA_MAX="2026-08-25", TODAY="2026-08-25";
+/* team-level day logs that exist outside the call feed */
+let RANGE={from:"2026-08-01",to:TODAY,label:"MTD"};
+
+function presetRange(k){
+  if(k==="Today")return{from:TODAY,to:TODAY,label:"Today"};
+  if(k==="WTD")return{from:"2026-08-24",to:TODAY,label:"This week"};
+  if(k==="MTD")return{from:"2026-08-01",to:TODAY,label:"August MTD"};
+  if(k==="QTD")return{from:"2026-07-01",to:TODAY,label:"Q3 to date"};
+  return{from:$("#d1").value,to:$("#d2").value,label:"Custom"};
+}
+const inRange=d=>d>=RANGE.from&&d<=RANGE.to;
+
+/* recompute each roster agent from the day rows inside the range */
+function slice(){
+  const by={};
+  ROSTER.forEach(a=>by[a.i]={n:0,dm:[0,0,0,0],o:[0,0,0,0],f:[0,0,0,0],k:0});
+  DQ.filter(r=>inRange(r.d)).forEach(r=>{
+    const b=by[r.a]; if(!b)return;
+    b.n+=r.n; b.k+=r.k;
+    r.dm.forEach((v,i)=>b.dm[i]+=v);
+    r.o.forEach((v,i)=>b.o[i]+=v);
+    r.f.forEach((v,i)=>b.f[i]+=v);
+  });
+  return by;
+}
+/* merge the slice back onto the agent objects the renderers read */
+function applySlice(){
+  const s=slice(); let tn=0,tdm=0,to=[0,0,0,0],tneg=0,tk=0;
+  ROSTER.forEach(a=>{
+    const b=s[a.i];
+    a.scored=b.n;
+    a.q = b.n ? 100*(b.dm[0]+b.dm[1]+b.dm[2]+b.dm[3])/(85*b.n) : null;
+    a.dims = b.n ? [100*b.dm[0]/(25*b.n),100*b.dm[1]/(25*b.n),100*b.dm[2]/(15*b.n),100*b.dm[3]/(20*b.n)] : [0,0,0,0];
+    a.flags=b.f; a.outc=b.o;
+    a.ask = b.n ? 100*b.k/b.n : null;
+    tn+=b.n; tdm+=b.dm[0]+b.dm[1]+b.dm[2]+b.dm[3];
+    b.o.forEach((v,i)=>to[i]+=v); tneg+=b.f[3]; tk+=b.k;
+  });
+  return {n:tn,q:tn?100*tdm/(85*tn):null,o:to,neg:tneg,ask:tk};
+}
+
+
+function render(){
+  const T=applySlice(), full=(RANGE.from<=DATA_MIN&&RANGE.to>=DATA_MAX);
+  const fmt=d=>new Date(d+"T12:00").toLocaleDateString("en-US",{month:"short",day:"numeric"});
+  /* --- the four headline cards --- */
+  setT("qTarget",SAVED.qual+"%");
+  const qp=T.q===null?0:Math.round(100*T.q/SAVED.qual);
+  setT("kAsk",T.q===null?"\u2014":qp+"%");
+  setW("kAskBar",Math.min(qp,100)+"%",qp>=100?"f-green":"f-coral");
+  setT("kAskSub",T.n?`${T.ask} rating asks across ${T.n} calls`:"no calls in range");
+
+  /* --- customer experience + team performance live cards --- */
+  const tot2=T.o[0]+T.o[1]+T.o[2]+T.o[3], un=T.o[2]+T.o[3];
+  setT("ceUn",un);
+  setT("ceUnSub",T.n?`${T.o[2]} unresolved \u00b7 ${T.o[3]} escalated \u00b7 ${T.o[1]} need follow-up`:"no calls in range");
+  setT("ceUnPct",tot2?(100*un/tot2).toFixed(1)+"%":"\u2014");
+  setW("ceUnBar",(tot2?Math.min(100*un/tot2,100):0).toFixed(1)+"%",un/Math.max(tot2,1)>0.08?"f-red":"f-amber");
+  const ar2=T.n?100*T.ask/T.n:0;
+  setT("tpAsk",T.n?Math.round(ar2):"\u2014");
+  setT("tpAskLbl",T.n?Math.round(ar2)+"%":"\u2014");
+  setT("tpAskSub",T.n?`${T.ask} asks across ${T.n} scored calls`:"no calls in range");
+  setW("tpAskBar",ar2.toFixed(1)+"%",ar2>=60?"f-green":ar2>=35?"f-amber":"f-red");
+
+  /* --- dashboard quality-dependent bits --- */
+  setT("kQual",T.q===null?"\u2014":T.q.toFixed(1));
+
+  /* --- ticket/call cards go stale outside full MTD --- */
+  document.querySelectorAll(".mtd-only").forEach(el=>el.classList.toggle("stale",!full));
+
+  flowPanel();
+  if($("#standings")) standings();
+  if($("#scKpis")) scorecard();
+  bonusPanel(); if($("#reasons")) reasonsPanel();
+}
+
+/* --- daily pulse follows the range --- */
+
+document.querySelectorAll(".pill").forEach(p=>p.addEventListener("click",()=>{
+  document.querySelectorAll(".pill").forEach(x=>x.classList.remove("on"));p.classList.add("on");
+  const k=p.textContent.trim();
+  $("#rng").classList.toggle("show",k==="Custom");
+  RANGE=presetRange(k); render();
+}));
+["d1","d2"].forEach(id=>$("#"+id).addEventListener("change",()=>{
+  if($("#d1").value>$("#d2").value){const t=$("#d1").value;$("#d1").value=$("#d2").value;$("#d2").value=t;}
+  RANGE=presetRange("Custom"); render();
+}));
+
+/* ============ admin settings ============ */
+/* The backoffice sets window.CS_ROLE before this script runs.
+   Hiding the tab is convenience, NOT access control - gate the
+   endpoint server-side too. */
+const ROLE=(typeof window!=="undefined"&&window.CS_ROLE)||"admin";
+const IS_ADMIN=ROLE==="admin";
+
+const DEFAULTS={
+  qual:90, tk:100, rt:4.8, minCalls:1, minSv:1,
+  tiers:{Overseas:[500,350,200,0],Miami:[750,525,300,0]},
+  weights:{"Correct Information":25,"Resolution":25,"Ownership":15,"Professionalism":20,"Documentation":15},
+  agents:{KV:{plan:"Overseas",goal:1350,elig:true},GA:{plan:"Overseas",goal:1350,elig:true},
+          WM:{plan:"Overseas",goal:1150,elig:true},AV:{plan:"Miami",goal:350,elig:true},
+          AC:{plan:"",goal:0,elig:false}}
+};
+let CFG=JSON.parse(JSON.stringify(DEFAULTS));
+let SAVED=JSON.parse(JSON.stringify(DEFAULTS));
+
+const toast=m=>{const t=$("#toast");t.textContent=m;t.classList.add("on");setTimeout(()=>t.classList.remove("on"),2600);};
+const isDirty=()=>JSON.stringify(CFG)!==JSON.stringify(SAVED);
+function markDirty(){
+  if(!$("#dirty"))return;
+  $("#dirty").classList.toggle("on",isDirty());
+  $("#btnSave").disabled=!isDirty()||!valid();
+  $("#btnReset").disabled=!isDirty();
+}
+function valid(){
+  const wsum=Object.values(CFG.weights).reduce((a,b)=>a+b,0);
+  return CFG.qual>0&&CFG.qual<=100 && CFG.tk>0 && CFG.rt>0&&CFG.rt<=5 && wsum===100
+    && Object.values(CFG.agents).every(a=>a.goal>=0);
+}
+
+function tierRows(){
+  $("#tierTbl").innerHTML=Object.entries(CFG.tiers).map(([plan,v])=>`<tr>
+    <td style="font-weight:700">${plan}</td>
+    ${v.map((amt,i)=>`<td><input class="cell" type="number" min="0" step="25" value="${amt}"
+       data-tier="${plan}" data-idx="${i}" ${IS_ADMIN?"":"disabled"}></td>`).join("")}
+    <td>${plan==="Overseas"?'<span class="chip up">Confirmed</span>':'<span class="chip down">Mid-tiers derived</span>'}</td>
+  </tr>`).join("");
+}
+function goalRows(){
+  $("#goalTbl").innerHTML=AGENTS.map(a=>{
+    const c=CFG.agents[a.i]||{plan:"",goal:0,elig:false};
+    const done=a.goalTk??a.tk, pace=c.goal?Math.round(100*done/c.goal):null;
+    return `<tr>
+      <td><div class="who">${av(a,30,10)}<div><div class="who-nm">${a.n}</div>
+        <div class="who-mt">${a.scored?a.scored+" calls scored":"not scored"}</div></div></div></td>
+      <td><select class="cell" data-agent="${a.i}" data-k="plan" ${IS_ADMIN?"":"disabled"}>
+        <option value=""${c.plan?"":" selected"}>Not on plan</option>
+        <option value="Overseas"${c.plan==="Overseas"?" selected":""}>Overseas</option>
+        <option value="Miami"${c.plan==="Miami"?" selected":""}>Miami</option></select></td>
+      <td><input class="cell" type="number" min="0" step="50" value="${c.goal}"
+        data-agent="${a.i}" data-k="goal" ${IS_ADMIN?"":"disabled"}></td>
+      <td class="mono" style="font-weight:700">${done.toLocaleString()}</td>
+      <td>${pace===null?'<span style="color:var(--ink3)">\u2014</span>':
+        `<div class="bar-cell"><div class="meter"><i class="${pace>=100?"f-green":"f-red"}"
+          style="width:${Math.min(pace,100)}%"></i></div><span class="${pace>=100?"g":"r"}">${pace}%</span></div>`}</td>
+      <td><div class="tgl" data-agent="${a.i}">
+        <button class="${c.elig?"on":""}" data-v="1" ${IS_ADMIN?"":"disabled"}>Yes</button>
+        <button class="${c.elig?"":"on"}" data-v="0" ${IS_ADMIN?"":"disabled"}>No</button></div></td>
+    </tr>`;}).join("");
+}
+function wtNote(){
+  const sum=Object.values(CFG.weights).reduce((a,b)=>a+b,0);
+  $("#wtNote").innerHTML=sum===100
+    ? `Totals <b>100</b> points. Documentation is not scored yet and returns \u22121, so live scores are normalised over the other <b>${100-CFG.weights.Documentation}</b>.`
+    : `<span style="color:var(--red-ink);font-weight:700">Totals ${sum} points, not 100.</span> Adjust before saving.`;
+  $("#wtGrid").querySelectorAll("[data-wt]").forEach(el=>el.closest(".inp").classList.toggle("bad",sum!==100));
+}
+function wtGrid(){
+  $("#wtGrid").innerHTML=Object.entries(CFG.weights).map(([k,v])=>`
+    <div class="fld"><label>${k}</label>
+      <div class="inp"><input type="number" min="0" max="100" step="5" value="${v}"
+        data-wt="${k}" ${IS_ADMIN?"":"disabled"}><span>pts</span></div></div>`).join("");
+  wtNote();
+}
+function setupTab(){ tierRows(); goalRows(); wtGrid(); markDirty(); }
+
+/* --- wiring (event delegation so re-renders keep working) --- */
+if(IS_ADMIN)$("#setup").addEventListener("input",e=>{
+  const t=e.target;
+  if(t.id==="setQual")CFG.qual=+t.value;
+  else if(t.id==="setTk")CFG.tk=+t.value;
+  else if(t.id==="setRt")CFG.rt=+t.value;
+  else if(t.id==="setMinCalls")CFG.minCalls=+t.value;
+  else if(t.id==="setMinSv")CFG.minSv=+t.value;
+  else if(t.dataset.tier)CFG.tiers[t.dataset.tier][+t.dataset.idx]=+t.value;
+  else if(t.dataset.wt){CFG.weights[t.dataset.wt]=+t.value; wtNote();}
+  else if(t.dataset.agent){
+    const a=CFG.agents[t.dataset.agent];
+    if(t.dataset.k==="goal"){a.goal=+t.value; t.classList.toggle("bad",+t.value<0);}
+    if(t.dataset.k==="plan")a.plan=t.value;
+    goalRowsPace(t.dataset.agent);
+  }
+  markDirty();
+});
+if(IS_ADMIN)$("#setup").addEventListener("change",e=>{
+  if(e.target.dataset.k==="plan"){CFG.agents[e.target.dataset.agent].plan=e.target.value;markDirty();}
+});
+if(IS_ADMIN)$("#setup").addEventListener("click",e=>{
+  const b=e.target.closest(".tgl button"); if(!b||b.disabled)return;
+  const g=b.closest(".tgl"); CFG.agents[g.dataset.agent].elig=b.dataset.v==="1";
+  [...g.children].forEach(x=>x.classList.toggle("on",x===b));
+  markDirty();
+});
+/* recompute just the pace cell for one row, without losing focus */
+function goalRowsPace(code){
+  const a=AGENTS.find(x=>x.i===code); if(!a)return;
+  const c=CFG.agents[code], done=a.goalTk??a.tk;
+  const row=[...$("#goalTbl").rows].find(r=>r.querySelector(`[data-agent="${code}"]`));
+  if(!row)return;
+  const pace=c.goal?Math.round(100*done/c.goal):null;
+  row.cells[4].innerHTML=pace===null?'<span style="color:var(--ink3)">\u2014</span>':
+    `<div class="bar-cell"><div class="meter"><i class="${pace>=100?"f-green":"f-red"}"
+      style="width:${Math.min(pace,100)}%"></i></div><span class="${pace>=100?"g":"r"}">${pace}%</span></div>`;
+}
+if(IS_ADMIN)$("#btnReset").addEventListener("click",()=>{
+  CFG=JSON.parse(JSON.stringify(SAVED));
+  ["setQual","setTk","setRt","setMinCalls","setMinSv"].forEach(id=>{
+    const m={setQual:"qual",setTk:"tk",setRt:"rt",setMinCalls:"minCalls",setMinSv:"minSv"};
+    $("#"+id).value=CFG[m[id]];});
+  setupTab(); applyCfg(); toast("Changes discarded");
+});
+if(IS_ADMIN)$("#btnSave").addEventListener("click",async()=>{
+  if(!valid()){toast("Fix the highlighted fields first");return;}
+  const payload=JSON.parse(JSON.stringify(CFG));
+  try{
+    if(typeof window.CS_SAVE_SETTINGS==="function") await window.CS_SAVE_SETTINGS(payload);
+    SAVED=JSON.parse(JSON.stringify(CFG));
+    applyCfg(); markDirty(); toast("Settings saved");
+  }catch(err){ toast("Could not save. Nothing was changed."); }
+});
+/* push saved config into the agent objects the rest of the page reads */
+function applyCfg(){
+  AGENTS.forEach(a=>{
+    const c=SAVED.agents[a.i]; if(!c)return;
+    a.plan=c.plan||"\u2014"; a.goal=c.goal||null; a.elig=c.elig;
+  });
+  render();
+}
+/* ============ agent scorecard ============ */
+const DIMLBL=["Correct Information","Resolution","Ownership","Professionalism"];
+const DIMMAX=[25,25,15,20];
+const FLAGLBL=["Needs review","Escalation needed","Churn / cancel risk","Negative sentiment","Billing / refund dispute","Compliance concern"];
+const OUTLBL=[["Resolved on the call","g"],["Needs follow-up","a"],["Unresolved","r"],["Escalated","r"]];
+let SC_AGENT="KV";
+
+function tierFor(plan,kpis){const t=SAVED.tiers[plan]; return t?t[3-kpis]:0;}
+function kpiCount(a){
+  let n=0;
+  if(a.q!==null&&a.scored>=SAVED.minCalls&&a.q>=SAVED.qual)n++;
+  if(a.goal&&a.goalTk>=a.goal*(SAVED.tk/100))n++;
+  if(a.rt!==null&&a.sv>=SAVED.minSv&&a.rt>=SAVED.rt)n++;
+  return n;
+}
+function scorecard(){
+  const a=ROSTER.find(x=>x.i===SC_AGENT)||ROSTER[0]; if(!a)return;
+  const plan=(SAVED.agents[a.i]||{}).plan||"", tiers=plan?SAVED.tiers[plan]:[0,0,0,0];
+  const max=tiers[0], met=kpiCount(a), bonus=plan?tierFor(plan,met):0;
+  const done=a.goalTk||0, goal=a.goal||0, left=4, days=17;
+  const diff=goal?done-goal:null, need=goal&&done<goal?Math.ceil((goal-done)/left):0;
+  const proj=done?Math.round(done/days*(days+left)):0;
+  const projMet=met+((goal&&done<goal&&proj>=goal)?1:0), projBonus=plan?tierFor(plan,projMet):0;
+  const s=slice()[a.i]||{n:0,dm:[0,0,0,0],o:[0,0,0,0],f:[0,0,0,0,0,0],k:0};
+
+  $("#scWho").innerHTML=`<div style="display:flex;align-items:center;gap:13px">${av(a,46,15)}
+    <div><div class="sc-name">${a.n}</div>
+    <div class="sc-sub">${plan?plan+" plan":"Not on a bonus plan"} \u00b7 ${s.n} calls scored in range</div></div></div>`;
+  $("#scMeta").innerHTML=`Range ${RANGE.from} to ${RANGE.to}<br>Working day ${days} of ${days+left} \u00b7 ${left} left`;
+
+  /* ---- bonus tier ladder ---- */
+  const rungs=[["No KPIs",tiers[3],0],["1 of 3",tiers[2],1],["2 of 3",tiers[1],2],["3 of 3",tiers[0],3]];
+  const nextUp=met<3?tiers[3-(met+1)]:null;
+  $("#scLadder").innerHTML=`
+    <div class="ladder-h"><b>Bonus position</b><span class="now">${plan?"$"+bonus:"\u2014"}</span>
+      <span style="font-size:12.5px;color:var(--ink2)">if the month ended today</span>
+      <span class="away">${nextUp!==null&&plan?`Next tier is <b>$${nextUp}</b>, ${3-met===1?"one more KPI":"one more KPI"} away \u00b7 projected <b>$${projBonus}</b> at this pace`:plan?`Top tier reached`:"No plan assigned"}</span></div>
+    <div class="rungs">${rungs.map(([l,v,k])=>{
+      const cls=k===met?"at":(k<met?"done":(k===met+1?"next":""));
+      return `<div class="rung ${cls}"><small>${l}</small><b>$${v}</b></div>`;}).join("")}</div>`;
+
+  /* ---- three KPI cards ---- */
+  const pct=(v,t)=>Math.max(0,Math.min(100,100*v/t));
+  const cards=[
+    {c:"k1",n:"Quality score",v:a.q===null?"\u2014":a.q.toFixed(1),u:"%",ok:a.q!==null&&a.q>=SAVED.qual,
+     meta:a.q===null?"no calls in range":(a.q>=SAVED.qual?`<b>${(a.q-SAVED.qual).toFixed(1)} pts</b> above target`:`<b>${(SAVED.qual-a.q).toFixed(1)} pts</b> to reach ${SAVED.qual}%`),
+     w:a.q===null?0:pct(a.q,SAVED.qual), f:a.q!==null&&a.q>=SAVED.qual?"f-green":"f-coral"},
+    {c:"k2",n:"Ticket goal",v:done.toLocaleString(),u:"",ok:!!(goal&&done>=goal),
+     meta:goal?(done>=goal?`<b>${diff.toLocaleString()}</b> ahead of ${goal.toLocaleString()}`:`<b>${(goal-done).toLocaleString()}</b> short of ${goal.toLocaleString()}`):"no goal set",
+     w:goal?pct(done,goal):0, f:goal&&done>=goal?"f-green":"f-red"},
+    {c:"k3",n:"Customer rating",v:a.rt===null?"\u2014":a.rt.toFixed(2),u:"/5",ok:a.rt!==null&&a.rt>=SAVED.rt,
+     meta:a.rt===null?"no surveys":(a.rt>=SAVED.rt?`<b>${a.sv}</b> surveys \u00b7 target ${SAVED.rt.toFixed(2)}`:`<b>${(SAVED.rt-a.rt).toFixed(2)}</b> to reach ${SAVED.rt.toFixed(2)}`),
+     w:a.rt===null?0:pct(a.rt,SAVED.rt), f:a.rt!==null&&a.rt>=SAVED.rt?"f-green":"f-red"}];
+  $("#scKpis").innerHTML=cards.map(k=>`<div class="kcard ${k.c}">
+    <div class="kc-top"><span class="kc-name">${k.n}</span><span class="st ${k.ok?"pillgood":"pillbad"}">${k.ok?"MET":"NOT MET"}</span></div>
+    <div class="kc-val">${k.v}<span>${k.u}</span></div>
+    <div class="kc-meta">${k.meta}</div>
+    <div class="meter"><i class="${k.f}" style="width:${k.w}%"></i></div></div>`).join("");
+
+  /* ---- what to fix ---- */
+  const gaps=[];
+  if(a.q!==null&&a.q<SAVED.qual) gaps.push(`<b>Quality</b> needs +${(SAVED.qual-a.q).toFixed(1)} pts to reach ${SAVED.qual}%`);
+  if(goal&&done<goal) gaps.push(`<b>Tickets</b> ${(goal-done).toLocaleString()} short, ${need}/day for the ${left} days left`);
+  if(a.rt!==null&&a.rt<SAVED.rt) gaps.push(`<b>Rating</b> needs +${(SAVED.rt-a.rt).toFixed(2)} to reach ${SAVED.rt.toFixed(2)}`);
+  $("#scFix").className=gaps.length?"fix":"fix ok";
+  $("#scFix").innerHTML=`<div class="fix-ic">${gaps.length?"!":"\u2713"}</div><div>
+    <span class="fix-h">${gaps.length?"What to fix":"Nothing outstanding"}</span>
+    <p>${gaps.length?gaps.join(" &nbsp;\u00b7&nbsp; ")+(nextUp!==null&&plan?` &nbsp;\u00b7&nbsp; next tier up = <b>$${nextUp}</b>`:""):"All three KPIs met. Ask what support keeps it there."}</p></div>`;
+
+  /* ---- pace vs clock ---- */
+  const elapsed=days/(days+left)*100, attain=goal?100*done/goal:0;
+  const pb=$("#scPaceBar");
+  if(pb){
+    if(!goal) pb.innerHTML='<div class="pacebar"><span class="of" style="font-size:12.5px;color:var(--ink3)">No monthly ticket goal set for this person.</span></div>';
+    else{
+      const ahead=attain>=elapsed;
+      pb.innerHTML=`<div class="pacebar">
+        <div class="pace-cap">Ticket pace</div>
+        <div class="pace-h">
+          <span class="big">${done.toLocaleString()}</span>
+          <span class="of">of ${goal.toLocaleString()} \u00b7 <b style="color:var(--ink)">${attain.toFixed(0)}%</b> of goal</span>
+          <span class="badge2 ${ahead?"g":"r"}">${ahead?"ahead of the clock":`${(elapsed-attain).toFixed(0)} pts behind the clock`}</span>
+        </div>
+        <div class="ptrack">
+          <i class="${attain>=100?"f-green":ahead?"f-amber":"f-red"}" style="width:${Math.min(attain,100).toFixed(1)}%"></i>
+          ${attain>100?'<span class="over"></span>':""}
+          <span class="pmark" data-l="${elapsed.toFixed(0)}% OF MONTH GONE" style="left:${elapsed.toFixed(1)}%"></span>
+        </div>
+        <div class="pace-foot"><span>Day ${days} of ${days+left}</span>
+          <span>Projected month-end <b style="color:${proj>=goal?"var(--green-ink)":"var(--red-ink)"}">${proj.toLocaleString()}</b></span></div>
+      </div>`;
+    }
+  }
+
+  /* ---- survey ask, judged against the team's own rate ---- */
+  const all=slice();
+  let tn=0,tk2=0; ROSTER.forEach(x=>{const b=all[x.i]; if(b){tn+=b.n; tk2+=b.k;}});
+  const teamAsk=tn?100*tk2/tn:0, myAsk=s.n?100*s.k/s.n:null;
+  const ab=$("#scAskBar");
+  if(ab){
+    if(myAsk===null) ab.innerHTML='<div class="pacebar"><div class="pace-cap">Survey asks</div><span style="font-size:12.5px;color:var(--ink3)">No scored calls in range.</span></div>';
+    else{
+      const above=myAsk>=teamAsk;
+      ab.innerHTML=`<div class="pacebar">
+        <div class="pace-cap">Survey asks</div>
+        <div class="pace-h">
+          <span class="big">${myAsk.toFixed(0)}<span style="font-size:19px">%</span></span>
+          <span class="of">${s.k} asks in ${s.n} calls</span>
+          <span class="badge2 ${above?"g":"r"}">${above?`${(myAsk-teamAsk).toFixed(0)} pts above team`:`${(teamAsk-myAsk).toFixed(0)} pts below team`}</span>
+        </div>
+        <div class="ptrack">
+          <i class="${myAsk>=60?"f-green":myAsk>=35?"f-amber":"f-red"}" style="width:${myAsk.toFixed(1)}%"></i>
+          <span class="pmark" data-l="TEAM ${teamAsk.toFixed(0)}%" style="left:${teamAsk.toFixed(1)}%"></span>
+        </div>
+        <div class="pace-foot"><span>${a.sv} surveys returned (month to date)</span>
+          <span>Rating <b style="color:${a.rt>=SAVED.rt?"var(--green-ink)":"var(--red-ink)"}">${a.rt===null?"\u2014":a.rt.toFixed(2)}</b></span></div>
+      </div>`;
+    }
+  }
+
+  /* ---- detail strip, balanced between the two ---- */
+  $("#scPace").innerHTML=[
+    ["Per day needed",goal?need.toLocaleString():"\u2014",need>60?"r":""],
+    ["Projected month-end",proj?proj.toLocaleString():"\u2014",goal?(proj>=goal?"g":"r"):""],
+    ["Days left",left,""],
+    ["Calls scored",s.n,""],
+    ["Asks made",s.k,""],
+    ["Surveys returned (month)",a.sv,""]
+  ].map(([l,v,c])=>`<div class="st1"><span>${l}</span><b class="${c}">${v}</b></div>`).join("");
+
+  /* ---- daily quality sparkline ---- */
+  const pts=DQ.filter(r=>r.a===a.i&&inRange(r.d)).sort((x,y)=>x.d<y.d?-1:1)
+    .map(r=>({d:r.d,q:100*(r.dm[0]+r.dm[1]+r.dm[2]+r.dm[3])/(85*r.n)}));
+  const sp=$("#scSpark");
+  if(sp){
+    if(pts.length<2){sp.innerHTML='<span style="font-size:11.5px;color:var(--ink3)">not enough days</span>';}
+    else{
+      const W=132,H=34,lo=Math.min(...pts.map(p=>p.q))-2,hi=Math.max(...pts.map(p=>p.q))+2;
+      const X=i=>i/(pts.length-1)*W, Y=v=>H-((v-lo)/(hi-lo))*H;
+      const line=pts.map((p,i)=>`${X(i).toFixed(1)},${Y(p.q).toFixed(1)}`).join(" ");
+      const tgtY=(SAVED.qual>=lo&&SAVED.qual<=hi)?Y(SAVED.qual):null;
+      sp.innerHTML=`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
+        ${tgtY!==null?`<line x1="0" y1="${tgtY.toFixed(1)}" x2="${W}" y2="${tgtY.toFixed(1)}" stroke="var(--green)" stroke-width="1" stroke-dasharray="3 3" opacity=".5"/>`:""}
+        <polyline points="${line}" fill="none" stroke="var(--coral)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="${X(pts.length-1).toFixed(1)}" cy="${Y(pts[pts.length-1].q).toFixed(1)}" r="3" fill="var(--coral)"/></svg>
+        <div style="font-size:11px;color:var(--ink3);margin-top:3px">${pts.length} days \u00b7 last ${pts[pts.length-1].q.toFixed(0)}%</div>`;
+    }
+  }
+
+  /* ---- quality breakdown ---- */
+  $("#scDims").innerHTML=DIMLBL.map((l,i)=>{
+    const avg=s.n?s.dm[i]/s.n:0, p=s.n?100*avg/DIMMAX[i]:0;
+    return `<tr><td style="font-weight:600">${l}</td><td class="num mono">${DIMMAX[i]}.0</td>
+      <td class="num mono">${avg.toFixed(1)}</td>
+      <td><div class="bar-cell"><div class="meter"><i class="${p>=90?"f-green":p>=85?"f-amber":"f-red"}"
+        style="width:${p}%"></i></div><span class="${p>=90?"g":p>=85?"a":"r"}">${p.toFixed(1)}%</span></div></td></tr>`;}).join("")
+    +`<tr><td style="color:var(--ink3)">Documentation</td><td class="num mono">15.0</td>
+      <td class="num mono" colspan="2" style="color:var(--ink3)">not scored yet</td></tr>
+     <tr style="background:#fafbfc"><td style="font-weight:800">Quality score</td><td class="num mono" style="font-weight:800">85.0</td>
+      <td class="num mono" style="font-weight:800">${s.n?(s.dm.reduce((x,y)=>x+y,0)/s.n).toFixed(1):"\u2014"}</td>
+      <td class="num mono" style="font-weight:800">${a.q===null?"\u2014":a.q.toFixed(1)+"%"}</td></tr>`;
+
+  /* ---- outcome mix ---- */
+  const tot=s.o.reduce((x,y)=>x+y,0);
+  $("#scOutBar").innerHTML=tot?`<div class="obar">${s.o.map((v,i)=>v?`<i style="width:${100*v/tot}%;background:${FLOWC[i][1]}" title="${FLOWC[i][0]}: ${v}"></i>`:"").join("")}</div>`:"";
+  $("#scOut").innerHTML=OUTLBL.map((o,i)=>`<tr>
+    <td style="font-weight:600"><span style="display:inline-block;width:9px;height:9px;border-radius:3px;background:${FLOWC[i][1]};margin-right:8px"></span>${o[0]}</td>
+    <td class="num mono" style="font-weight:700">${s.o[i]}</td>
+    <td class="num mono ${s.o[i]&&i>1?"r":""}">${tot?(100*s.o[i]/tot).toFixed(1)+"%":"\u2014"}</td></tr>`).join("");
+
+  /* ---- risk flags ---- */
+  $("#scFlags").innerHTML=FLAGLBL.map((l,i)=>{
+    const v=s.f[i]||0, p=s.n?100*v/s.n:0;
+    return `<tr><td style="font-weight:600">${l}</td><td class="num mono" style="font-weight:700">${v}</td>
+      <td><div class="bar-cell"><div class="meter"><i class="${p>12?"f-red":p>6?"f-amber":"f-green"}" style="width:${Math.min(p*4,100)}%"></i></div>
+      <span class="${p>12?"r":p>6?"a":""}">${s.n?p.toFixed(1)+"%":"\u2014"}</span></div></td></tr>`;}).join("");
+
+  /* ---- 1:1 notes ---- */
+  const notes=[];
+  if(a.q!==null&&a.q<SAVED.qual){
+    const worst=DIMLBL[s.dm.map((v,i)=>s.n?100*(v/s.n)/DIMMAX[i]:100).reduce((b,v,i,arr)=>v<arr[b]?i:b,0)];
+    notes.push(["q","Quality",`${(SAVED.qual-a.q).toFixed(1)} points short of ${SAVED.qual}%. Weakest dimension is ${worst}. Work that one first.`]);
+  }
+  if(goal&&done<goal) notes.push(["t","Tickets",`${(goal-done).toLocaleString()} short with ${left} days left, ${need} a day needed. Check the goal is realistic before treating it as a miss.`]);
+  if(a.ask!==null&&a.ask<35) notes.push(["s","Survey ask",`Asking on only ${a.ask.toFixed(0)}% of calls. No ask means no rating, so the rating KPI rests on a thin sample.`]);
+  if(s.n&&s.f[3]/s.n>0.08) notes.push(["q","Sentiment",`${s.f[3]} calls flagged negative, ${(100*s.f[3]/s.n).toFixed(0)}% of theirs. Listen to two together.`]);
+  if(s.n&&s.f[1]/s.n>0.15) notes.push(["q","Escalations",`${s.f[1]} calls needed escalation. Worth checking whether the authority to resolve sits too high.`]);
+  if(!notes.length) notes.push(["q","On track","All three KPIs met and no flag above threshold. Ask what support would keep it there."]);
+  $("#scFocus").innerHTML=notes.map(([t,hd,p])=>`<div class="foc"><div class="foc-h"><b>${hd}</b>
+    <span class="tag ${t}">${t==="q"?"Quality":t==="t"?"Tickets":"Survey"}</span></div><div class="foc-p">${p}</div></div>`).join("");
+}
+function scInit(){
+  const sel=$("#scAgent"); if(!sel)return;
+  sel.innerHTML=ROSTER.map(a=>`<option value="${a.i}"${a.i===SC_AGENT?" selected":""}>${a.n}</option>`).join("");
+  sel.addEventListener("change",e=>{SC_AGENT=e.target.value; scorecard();});
+  $("#btnPdf").addEventListener("click",()=>window.print());
+}
+document.querySelectorAll(".tab").forEach(t=>t.addEventListener("click",()=>{
+  document.querySelectorAll(".tab").forEach(x=>x.classList.remove("on"));
+  t.classList.add("on");
+  ["dash","people","refunds","bonus","setup","flags"].forEach(s=>{const el=$("#"+s); if(el)el.classList.add("hide");});
+  const tgt=$("#"+t.dataset.t); if(tgt)tgt.classList.remove("hide");
+  window.scrollTo({top:0,behavior:"smooth"});
+}));
+if(!IS_ADMIN){
+  ["setup","people"].forEach(k=>{
+    const tb=document.querySelector(`.tab[data-t="${k}"]`); if(tb)tb.remove();
+    const sc=$("#"+k); if(sc)sc.remove();
+  });
+}
+if(IS_ADMIN){ setupTab(); scInit(); }
+render();
+</script>
