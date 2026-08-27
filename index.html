@@ -784,12 +784,13 @@ function rankMark(x){
 /* ============================================================
    ACCESS
    window.CS_ROLE is set by whatever hosts this page.
-   Default is viewer: on a static host nothing sets it, and
-   Setup / Agent Performance expose per-agent pay detail.
-   ?admin=1 is a convenience for testing, NOT access control.
+   Default is admin: everyone with the link sees Agent Performance.
+   This page is served from a public repo, so per-agent pay detail
+   is public. ?viewer=1 previews the restricted view. Neither the
+   default nor the flag is access control.
    ============================================================ */
 const ROLE = (typeof window!=="undefined" && window.CS_ROLE)
-  || (new URLSearchParams(location.search).has("admin") ? "admin" : "viewer");
+  || (new URLSearchParams(location.search).has("viewer") ? "viewer" : "admin");
 const IS_ADMIN = ROLE==="admin";
 
 let CFG=JSON.parse(JSON.stringify(DEFAULTS));
