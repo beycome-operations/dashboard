@@ -97,19 +97,8 @@ table.rank td.num,table.reasons td.num{text-align:right}
 table.rank th[data-k]::after{content:"";display:inline-block;width:0;height:0;margin-left:5px;vertical-align:middle;opacity:0}
 table.rank th.asc::after{opacity:.6;border-left:4px solid transparent;border-right:4px solid transparent;border-bottom:5px solid currentColor}
 table.rank th.desc::after{opacity:.6;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid currentColor}
-.rk-badge{display:grid;place-items:center;width:26px;height:26px;border-radius:8px;background:#f0f1f3;
-  color:var(--ink3);font-size:11.5px;font-weight:800}
-.medal{position:relative;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;
-  color:#fff;font-size:11.5px;font-weight:800;box-shadow:0 1px 3px rgba(0,0,0,.18)}
-.medal svg{display:block}
-.medal::after{content:"";position:absolute;bottom:-4px;left:50%;transform:translateX(-50%);
-  width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent}
-.medal.m1{background:linear-gradient(145deg,#f2c94c,#c99700)}
-.medal.m1::after{border-top:6px solid #c99700}
-.medal.m2{background:linear-gradient(145deg,#d8dde3,#a9b2bc)}
-.medal.m2::after{border-top:6px solid #a9b2bc}
-.medal.m3{background:linear-gradient(145deg,#e0a276,#b0703c)}
-.medal.m3::after{border-top:6px solid #b0703c}
+.rk-n{display:block;width:26px;text-align:center;font-size:13px;font-weight:800;color:var(--ink3);font-variant-numeric:tabular-nums}
+.rk-n.rk-1{color:var(--coral)}
 table.rank td:first-child{padding-top:17px;padding-bottom:17px}
 tr.dim{opacity:.42}
 .kpi-val.todo{color:var(--ink3)}
@@ -129,7 +118,8 @@ tr.dim{opacity:.42}
 .champ-nm{font-size:19px;font-weight:800;letter-spacing:-.02em}
 .champ-mt{font-size:12.5px;color:var(--ink2);margin-top:3px}
 .champ-mt b{color:var(--ink)}
-.av{border-radius:50%;object-fit:cover;flex:none;display:grid;place-items:center;font-weight:700;color:#fff;letter-spacing:.02em}
+.av{position:relative;border-radius:50%;object-fit:cover;flex:none;display:grid;place-items:center;font-weight:700;color:#fff;letter-spacing:.02em;overflow:hidden}
+.av-img{position:absolute;inset:0;width:100%;height:100%;border-radius:50%;object-fit:cover;object-position:center top}
 .av.g1{background:#8b5cf6}.av.g2{background:#0ea5e9}.av.g3{background:#f43f5e}.av.g4{background:#10b981}.av.g5{background:#f59e0b}
 /* ---------- two col ---------- */
 .two{display:grid;grid-template-columns:1.72fr 1fr;gap:18px;margin-bottom:18px;align-items:start}
@@ -401,19 +391,14 @@ select.cell{border:1px solid var(--line);border-radius:7px;padding:7px 9px;font:
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.4"/><path d="M3 20a6 6 0 0 1 12 0M17 11.2a3 3 0 0 0 0-5.9M18.5 20a5.6 5.6 0 0 0-2.6-4.7"/></svg>
       Agent Performance
     </button>
-    <button class="tab" data-t="refunds" role="tab">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9.5 12 4l9 5.5v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-9Z"/><path d="M9 13.5h6M12 16.4V10.6"/></svg>
-      Refunds
-    </button>
     <button class="tab" data-t="bonus" role="tab">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.8h4.2a1.9 1.9 0 0 1 0 3.8H9.5"/></svg>
       Bonus
     </button>
-    <button class="tab" data-t="setup" role="tab">
+    <button class="tab hide" data-t="setup" role="tab">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1V21a2 2 0 1 1-4 0v-.1A1.6 1.6 0 0 0 7.5 19.4l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.6 1.6 0 0 0 3 15H3a2 2 0 1 1 0-4h.1A1.6 1.6 0 0 0 4.6 8.5l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1A1.6 1.6 0 0 0 10 4.6V3a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 2.7 1.1l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0 1.1 2.7H21a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1.3Z"/></svg>
       Setup
     </button>
-    <button class="tab" data-t="flags" role="tab">Data health <span class="cnt">7</span></button>
   </div>
 
   <!-- ============ OVERVIEW ============ -->
@@ -640,56 +625,7 @@ select.cell{border:1px solid var(--line);border-radius:7px;padding:7px 9px;font:
 
   </section>
 
-  <!-- ============ REFUNDS & CANCELLATIONS ============ -->
-  <section id="refunds" class="hide">
-    <div class="card" style="margin-bottom:18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap">
-      <div class="alert-ic" style="background:#fbe6b8;color:#92400e">&#9650;</div>
-      <div>
-        <b style="font-size:14px;letter-spacing:-.01em">Nothing feeds this tab yet</b>
-        <p style="margin:3px 0 0;font-size:12.5px;color:var(--ink2)">Every figure below is a placeholder until a refund export reaches the dashboard.</p>
-      </div>
-    </div>
-    <div class="grid4">
-      <div class="card">
-        <div class="kpi-lbl"><span class="dot" style="background:var(--ink3)"></span>Refund requests</div>
-        <div class="kpi-val todo">&mdash;</div>
-        <div class="kpi-sub">19 calls flagged as a billing or refund dispute</div>
-        <div class="meter-row"><span>Requests logged</span><b class="todo">Not tracked</b></div>
-        <div class="meter empty"></div>
-      </div>
-      <div class="card">
-        <div class="kpi-lbl"><span class="dot" style="background:var(--ink3)"></span>Amount refunded</div>
-        <div class="kpi-val todo">&mdash;</div>
-        <div class="kpi-sub">No dollar figures reach this dashboard</div>
-        <div class="meter-row"><span>This period</span><b class="todo">Not tracked</b></div>
-        <div class="meter empty"></div>
-      </div>
-      <div class="card">
-        <div class="kpi-lbl"><span class="dot" style="background:var(--ink3)"></span>Cancellations</div>
-        <div class="kpi-val todo">&mdash;</div>
-        <div class="kpi-sub">72 calls classified as cancel, withdraw or relist</div>
-        <div class="meter-row"><span>Listings cancelled</span><b class="todo">Not tracked</b></div>
-        <div class="meter empty"></div>
-      </div>
-      <div class="card">
-        <div class="kpi-lbl"><span class="dot" style="background:var(--ink3)"></span>Save rate</div>
-        <div class="kpi-val todo">&mdash;</div>
-        <div class="kpi-sub">Share of at-risk customers retained</div>
-        <div class="meter-row"><span>Retained</span><b class="todo">Not tracked</b></div>
-        <div class="meter empty"></div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-t">Refund reasons</div>
-      <div class="card-s" style="margin-bottom:16px">Why customers asked for money back</div>
-      <div class="wire">
-        <b>Nothing feeds this yet</b>
-        <p>To fill this container, one export needs to reach the dashboard: refund requests with a date, an amount, a reason code and the agent who handled it, plus whether the customer stayed. Until then these four cards and this panel stay empty rather than showing a number nobody can trace.</p>
-        <p style="margin-top:9px">The call feed already flags 19 billing or refund disputes and 72 cancellation calls in range, which is a starting point for reason codes but is call volume, not refund outcomes.</p>
-      </div>
-    </div>
-  </section>
+  
 
   <!-- ============ BONUS ============ -->
   <section id="bonus" class="hide">
@@ -773,53 +709,7 @@ select.cell{border:1px solid var(--line);border-radius:7px;padding:7px 9px;font:
     </div>
   </section>
 
-  <!-- ============ DATA HEALTH ============ -->
-  <section id="flags" class="hide">
-    <div class="card">
-      <div class="card-t">Data health</div>
-      <div class="card-s" style="margin-bottom:16px">Things to fix before these numbers drive a payout</div>
-      <div class="alert warn">
-        <div class="alert-ic">&#9650;</div>
-        <div><b>Only about half of inbound calls get scored</b>
-        <p>The scoring pipeline pulls incoming calls only, so every scored call is inbound and the ask rates on this page are true inbound rates. But 843 calls were scored between 6 and 25 August against roughly 1,737 inbound calls for the month. Part of that is the later start date and the 41 excluded non-CS calls; the rest is unexplained. Worth confirming whether unrecorded or very short calls are being skipped before treating the quality score as representative of every call.</p></div>
-      </div>
-      <div class="alert warn">
-        <div class="alert-ic">&#9650;</div>
-        <div><b>Nothing on this page measures open or unresolved tickets</b>
-        <p>"Calls not resolved" counts call outcomes from the scoring feed, not tickets. Zoho reports total and closed ticket counts but no open, ageing or reopened figure reaches the dashboard, so a ticket can sit unresolved for a week without appearing anywhere here.</p></div>
-      </div>
-      <div class="alert bad">
-        <div class="alert-ic">!</div>
-        <div><b>Same-day close rate is not being captured</b>
-        <p>It is the team's actual goal and nothing here can measure it. Average resolution time is the closest proxy and it is not the same thing: an agent averaging 6 hours could still be closing a third of their tickets the next morning. To fix it, export per-ticket created and closed timestamps from Zoho Desk and compare the calendar dates, or the business hours elapsed if closes after 6pm should still count.</p></div>
-      </div>
-      <div class="alert bad">
-        <div class="alert-ic">!</div>
-        <div><b>Ticket attribution matches only 26% of rows</b>
-        <p>16,654 ticket rows loaded, 4,272 matched to a roster agent. 12,360 match no surname. Zoho also shows a "beycome beycome" system account holding 12,472 closed tickets, which likely accounts for most of the gap. Every ticket figure here rests on the matched quarter.</p></div>
-      </div>
-      <div class="alert bad">
-        <div class="alert-ic">!</div>
-        <div><b>Ticket goals look mis-set, not missed</b>
-        <p>Warren and Giebelle need 122 and 108 tickets a day for 4 days against recent output of 11 and 60. Kenneth is at 169% of his. Goals that far apart usually mean the goal is wrong, not the agent. Worth reviewing before this month closes.</p></div>
-      </div>
-      <div class="alert warn">
-        <div class="alert-ic">▲</div>
-        <div><b>Paid hours disagree between sheets</b>
-        <p>For Monday 24 Aug the Recap shows 42.5 hours across 5 people and the Trend tab shows 66.5 across 7. Tickets per hour moves materially depending on which is right. The Recap figure is used here.</p></div>
-      </div>
-      <div class="alert info">
-        <div class="alert-ic">i</div>
-        <div><b>Asly is on the floor but not on the bonus roster</b>
-        <p>She closed 69 tickets and took 20 calls this month, and appears in the daily log, but carries no bonus plan, ticket goal or call scoring. She is excluded from every bonus and quality figure here.</p></div>
-      </div>
-      <div class="alert ok">
-        <div class="alert-ic">✓</div>
-        <div><b>Ratings are live</b>
-        <p>377 rating values loaded, 363 matched to a roster agent. KPI 3 is now wired despite the handbook note saying otherwise.</p></div>
-      </div>
-    </div>
-  </section>
+  
 
 </div>
 <div class="toast" id="toast"></div>
@@ -878,17 +768,17 @@ $("#d2").min=DATA_MIN; $("#d2").max=DATA_MAX; $("#d2").value=DATA_MAX;
    ============================================================ */
 const setT=(id,v)=>{const e=$("#"+id); if(e)e.textContent=v;};
 const setW=(id,w,c)=>{const e=$("#"+id); if(e){e.style.width=w; if(c)e.className=c;}};
-const av=(a,sz,fs)=>`<div class="av ${a.g}" style="width:${sz}px;height:${sz}px;font-size:${fs}px">${a.i}</div>`;
+/* headshots live here, not in data.json, so a Make refresh cannot drop them */
+const PHOTOS={AV:"img/andrys-vargas.png",KV:"img/kenneth-vanegas.png",GA:"img/giebelle-abella.png",WM:"img/warren-mckray.png",AC:"img/asly-calix.png"};
+const av=(a,sz,fs)=>`<div class="av ${a.g}" style="width:${sz}px;height:${sz}px;font-size:${fs}px">${a.i}${PHOTOS[a.i]?`<img class="av-img" src="${PHOTOS[a.i]}" alt="" onerror="this.remove()">`:""}</div>`;
 const qcls=v=>v>=90?"g":v>=85?"a":"r";
 const num=v=>(v==null?"—":v.toLocaleString());
 
 let SORT={k:"tk",dir:-1}, FIND="";
-const TROPHY='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10v5a5 5 0 0 1-10 0V4Z"/><path d="M17 5h2.5a2.5 2.5 0 0 1 0 5H17M7 5H4.5a2.5 2.5 0 0 0 0 5H7"/><path d="M12 14v3M9 20h6M10 17h4"/></svg>';
 
 function rankMark(x){
-  if(SORT.k==="name"||x>2) return `<span class="rk-badge">${x+1}</span>`;
-  if(x===0) return `<span class="medal m1" title="1st">${TROPHY}</span>`;
-  return `<span class="medal m${x+1}" title="${x+1===2?"2nd":"3rd"}">${x+1}</span>`;
+  const lead = SORT.k!=="name" && x===0;
+  return `<span class="rk-n${lead?" rk-1":""}">${x+1}</span>`;
 }
 
 /* ============================================================
@@ -1477,7 +1367,7 @@ function scInit(){
 document.querySelectorAll(".tab").forEach(t=>t.addEventListener("click",()=>{
   document.querySelectorAll(".tab").forEach(x=>x.classList.remove("on"));
   t.classList.add("on");
-  ["dash","people","refunds","bonus","setup","flags"].forEach(s=>{const el=$("#"+s); if(el)el.classList.add("hide");});
+  ["dash","people","bonus","setup"].forEach(s=>{const el=$("#"+s); if(el)el.classList.add("hide");});
   const tgt=$("#"+t.dataset.t); if(tgt)tgt.classList.remove("hide");
   window.scrollTo({top:0,behavior:"smooth"});
 }));
