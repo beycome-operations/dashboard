@@ -1,0 +1,13 @@
+copy(JSON.stringify({
+  generated_at: new Date().toISOString(),
+  window:  { min: DATA_MIN, max: DATA_MAX, today: TODAY },
+  agents:  AGENTS,
+  dq:      DQ,
+  reasons: REASONS,
+  config:  DEFAULTS,
+  snapshot: {
+    csat: 4.87, surveys: 363, ttc: "07:24", ttcFast: "05:47", ttcSlow: "15:13",
+    calls: 2704, callsIn: 1737, callsOut: 967,
+    tickets: 4559, workingDays: 17, workingDaysTotal: 21
+  }
+}, null, 1))
