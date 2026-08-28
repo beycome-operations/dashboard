@@ -929,9 +929,15 @@ function snapshotPanel(T){
   setT("snCsatPct", S.csat==null?"—":cp+"%");
   setW("snCsatBar", Math.min(cp,100)+"%", cp>=100?"f-green":"f-amber");
   /* time to close */
+  const RH=ROSTER.map(a=>a.resH).filter(v=>v!=null&&v>0).sort((x,y)=>x-y);
+  if(HAS_TK && RH.length){
+    setT("snTtc", hhmm(RH[Math.floor(RH.length/2)]));
+    $("#snTtcRange").innerHTML=`Fastest <b>${hhmm(RH[0])}</b> &middot; slowest <b>${hhmm(RH[RH.length-1])}</b>`;
+    setT("snTtcSpread", (RH[RH.length-1]/RH[0]).toFixed(1)+"\u00d7 spread");
+  } else {
   setT("snTtc", SNAP.ttc||"—");
   $("#snTtcRange").innerHTML=`Fastest <b>${SNAP.ttcFast||"—"}</b> &middot; slowest <b>${SNAP.ttcSlow||"—"}</b>`;
-  setT("snTtcSpread", SNAP.ttcSpread?SNAP.ttcSpread+" spread":"—");
+  setT("snTtcSpread", SNAP.ttcSpread?SNAP.ttcSpread+" spread":"—"); }
   const pin=$("#snTtcPin"); if(pin&&SNAP.ttcPin!=null) pin.style.left=SNAP.ttcPin+"%";
   /* calls handled */
   setT("snCalls", num(S.calls));
@@ -981,6 +987,8 @@ const inRange=d=>d>=RANGE.from&&d<=RANGE.to;
    minus the last row strictly before it. Falls back to the monthly
    figure until at least two snapshots straddle the range.            */
 const HAS_DAILY = Array.isArray(DQ) && DQ.some(r=>r && r.c!==undefined);
+const HAS_TK    = Array.isArray(DQ) && DQ.some(r=>r && r.tk!==undefined);
+function hhmm(h){ const m=Math.round(h*60); return String(Math.floor(m/60)).padStart(2,"0")+":"+String(m%60).padStart(2,"0"); }
 const TS = (D.ts||[]).slice().sort((x,y)=>x[0]<y[0]?-1:1);
 const TS_COL = {GA:1, WM:2, KV:3, AV:4};
 function tkInRange(code){
@@ -997,11 +1005,12 @@ function tkInRange(code){
 
 function slice(){
   const by={};
-  ROSTER.forEach(a=>by[a.i]={n:0,dm:[0,0,0,0],o:[0,0,0,0],f:[0,0,0,0,0,0],k:0,c:0,ci:0,co:0,rs:0,rn:0});
+  ROSTER.forEach(a=>by[a.i]={n:0,dm:[0,0,0,0],o:[0,0,0,0],f:[0,0,0,0,0,0],k:0,c:0,ci:0,co:0,rs:0,rn:0,tk:0,mh:[]});
   DQ.filter(r=>inRange(r.d)).forEach(r=>{
     const b=by[r.a]; if(!b)return;
     b.n+=r.n; b.k+=r.k;
     b.c+=r.c||0; b.ci+=r.ci||0; b.co+=r.co||0; b.rs+=r.rs||0; b.rn+=r.rn||0;
+    b.tk+=r.tk||0; if(r.mh) b.mh.push({h:r.mh,n:r.tk||0});
     r.dm.forEach((v,i)=>b.dm[i]+=v);
     r.o.forEach((v,i)=>b.o[i]+=v);
     r.f.forEach((v,i)=>b.f[i]+=v);
@@ -1021,8 +1030,16 @@ function applySlice(){
                                a._mRt=a.rt; a._mSv=a.sv; a._mTk=a.tk; }
     if(HAS_DAILY){ a.calls=b.c; a.cin=b.ci; a.cout=b.co;
               a.sv=b.rn; a.rt=b.rn?b.rs/b.rn:null; }
-    const tkr = tkInRange(a.i);
-    a.tk = tkr!==null ? tkr : a._mTk;
+    if(HAS_TK){
+      a.tk = b.tk;
+      const w = b.mh.filter(x=>x.n>0);
+      const tot = w.reduce((s,x)=>s+x.n,0);
+      a.resH = tot ? +(w.reduce((s,x)=>s+x.h*x.n,0)/tot).toFixed(2) : null;
+      a.res  = a.resH==null ? "" : hhmm(a.resH);
+    } else {
+      const tkr = tkInRange(a.i);
+      a.tk = tkr!==null ? tkr : a._mTk;
+    }
     tn+=b.n; tdm+=b.dm[0]+b.dm[1]+b.dm[2]+b.dm[3];
     b.o.forEach((v,i)=>to[i]+=v); tneg+=b.f[3]; tk+=b.k;
     tc+=b.c; tci+=b.ci; tco+=b.co; trs+=b.rs; trn+=b.rn;
