@@ -877,6 +877,7 @@ function reasonsPanel(T){
     $("#reasons").innerHTML='<tr><td colspan="6" style="padding:18px;color:var(--ink3)">No scored calls in this range.</td></tr>';
     setT("reasonsSub","Top five reasons, classified from 0 call summaries"); return;
   }
+  rows=rows.slice(0,5);
   $("#reasons").innerHTML=rows.map((r,i)=>{
     const share = r.share!=null ? r.share : (scored?100*r.n/scored:0);
     const unres = r.unres!=null ? r.unres : (r.n?100*r.u/r.n:0);
