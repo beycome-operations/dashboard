@@ -911,14 +911,22 @@ function flowPanel(){
 /* ============================================================
    MONTH SNAPSHOT CARDS (do not follow the date filter)
    ============================================================ */
-function snapshotPanel(){
+function snapshotPanel(T){
   const wd=PERIOD.workingDay||1;
+  /* prefer figures computed for the selected range; fall back to the month */
+  const R = T && T.calls!==undefined ? {
+      csat   : T.rn ? T.rsum/T.rn : null,
+      surveys: T.rn,
+      calls  : T.calls, callsIn: T.cin, callsOut: T.cout,
+      tickets: T.tickets, ranged:true
+    } : Object.assign({}, SNAP, {ranged:false});
+  const S = R;
   /* CSAT */
-  setT("snCsat", SNAP.csat==null?"—":SNAP.csat.toFixed(2));
-  setT("snCsatSub", `${num(SNAP.surveys)} surveys returned`);
+  setT("snCsat", S.csat==null?"—":S.csat.toFixed(2));
+  setT("snCsatSub", `${num(S.surveys)} surveys returned`);
   setT("snCsatTgt", SAVED.rt.toFixed(2));
-  const cp = SNAP.csat==null?0:Math.round(100*SNAP.csat/SAVED.rt);
-  setT("snCsatPct", SNAP.csat==null?"—":cp+"%");
+  const cp = S.csat==null?0:Math.round(100*S.csat/SAVED.rt);
+  setT("snCsatPct", S.csat==null?"—":cp+"%");
   setW("snCsatBar", Math.min(cp,100)+"%", cp>=100?"f-green":"f-amber");
   /* time to close */
   setT("snTtc", SNAP.ttc||"—");
@@ -926,24 +934,28 @@ function snapshotPanel(){
   setT("snTtcSpread", SNAP.ttcSpread?SNAP.ttcSpread+" spread":"—");
   const pin=$("#snTtcPin"); if(pin&&SNAP.ttcPin!=null) pin.style.left=SNAP.ttcPin+"%";
   /* calls handled */
-  setT("snCalls", num(SNAP.calls));
-  setT("snCallsSub", SNAP.calls?`${Math.round(SNAP.calls/wd)} per working day`:"—");
-  setT("snCallsSplit", `${num(SNAP.callsIn)} inbound · ${num(SNAP.callsOut)} outbound`);
-  const inPct = SNAP.calls?Math.round(100*SNAP.callsIn/SNAP.calls):0;
-  setT("snCallsPct", SNAP.calls?inPct+"% in":"—");
+  setT("snCalls", num(S.calls));
+  setT("snCallsSub", S.calls?`${Math.round(S.calls/wd)} per working day`:"—");
+  setT("snCallsSplit", `${num(S.callsIn)} inbound · ${num(S.callsOut)} outbound`);
+  const inPct = S.calls?Math.round(100*S.callsIn/S.calls):0;
+  setT("snCallsPct", S.calls?inPct+"% in":"—");
   const ib=$("#snCallsInBar"), ob=$("#snCallsOutBar");
   if(ib) ib.style.width=inPct+"%"; if(ob) ob.style.width=(100-inPct)+"%";
   /* tickets */
-  setT("snTickets", num(SNAP.tickets));
-  setT("snTicketsSub", SNAP.tickets
-    ? `${Math.round(SNAP.tickets/wd)} per working day · ${Math.round(SNAP.tickets/Math.max(AGENTS.length-1,1))} per person`
+  setT("snTickets", num(S.tickets));
+  setT("snTicketsSub", S.tickets
+    ? `${Math.round(S.tickets/wd)} per working day · ${Math.round(S.tickets/Math.max(AGENTS.length-1,1))} per person`
     : "—");
   /* surveys */
-  setT("snSv", num(SNAP.surveys));
-  setT("snSvSub", `of ${num(SNAP.callsIn)} inbound calls · outbound excluded`);
-  const sp = SNAP.callsIn?Math.round(100*SNAP.surveys/SNAP.callsIn):0;
-  setT("snSvPct", SNAP.callsIn?sp+"%":"—");
+  setT("snSv", num(S.surveys));
+  setT("snSvSub", `of ${num(S.callsIn)} inbound calls · outbound excluded`);
+  const sp = S.callsIn?Math.round(100*S.surveys/S.callsIn):0;
+  setT("snSvPct", S.callsIn?sp+"%":"—");
   setW("snSvBar", sp+"%","f-amber");
+  document.querySelectorAll(".snap").forEach(el=>{
+    if(R.ranged){ el.style.display="none"; }
+    else { el.style.display=""; }
+  });
 }
 
 /* ============================================================
@@ -963,12 +975,32 @@ function presetRange(k){
 }
 const inRange=d=>d>=RANGE.from&&d<=RANGE.to;
 
+
+/* ---- tickets in range, from the nightly lifetime snapshots ----
+   Each row is a running total, so closed-in-range = last row in range
+   minus the last row strictly before it. Falls back to the monthly
+   figure until at least two snapshots straddle the range.            */
+const TS = (D.ts||[]).slice().sort((x,y)=>x[0]<y[0]?-1:1);
+const TS_COL = {GA:1, WM:2, KV:3, AV:4};
+function tkInRange(code){
+  const col=TS_COL[code]; if(col==null||TS.length<2) return null;
+  let before=null, last=null;
+  for(const row of TS){
+    if(row[0] <  RANGE.from) before=row;
+    if(row[0] <= RANGE.to)   last=row;
+  }
+  if(!before||!last||before===last) return null;
+  const v = Number(last[col]) - Number(before[col]);
+  return isFinite(v) && v>=0 ? v : null;
+}
+
 function slice(){
   const by={};
-  ROSTER.forEach(a=>by[a.i]={n:0,dm:[0,0,0,0],o:[0,0,0,0],f:[0,0,0,0,0,0],k:0});
+  ROSTER.forEach(a=>by[a.i]={n:0,dm:[0,0,0,0],o:[0,0,0,0],f:[0,0,0,0,0,0],k:0,c:0,ci:0,co:0,rs:0,rn:0});
   DQ.filter(r=>inRange(r.d)).forEach(r=>{
     const b=by[r.a]; if(!b)return;
     b.n+=r.n; b.k+=r.k;
+    b.c+=r.c||0; b.ci+=r.ci||0; b.co+=r.co||0; b.rs+=r.rs||0; b.rn+=r.rn||0;
     r.dm.forEach((v,i)=>b.dm[i]+=v);
     r.o.forEach((v,i)=>b.o[i]+=v);
     r.f.forEach((v,i)=>b.f[i]+=v);
@@ -976,7 +1008,7 @@ function slice(){
   return by;
 }
 function applySlice(){
-  const s=slice(); let tn=0,tdm=0,to=[0,0,0,0],tneg=0,tk=0;
+  const s=slice(); let tn=0,tdm=0,to=[0,0,0,0],tneg=0,tk=0,tc=0,tci=0,tco=0,trs=0,trn=0;
   ROSTER.forEach(a=>{
     const b=s[a.i];
     a.scored=b.n;
@@ -984,10 +1016,20 @@ function applySlice(){
     a.dims = b.n ? [100*b.dm[0]/(25*b.n),100*b.dm[1]/(25*b.n),100*b.dm[2]/(15*b.n),100*b.dm[3]/(20*b.n)] : [0,0,0,0];
     a.flags=b.f; a.outc=b.o;
     a.ask = b.n ? 100*b.k/b.n : null;
+    if(a._mCalls===undefined){ a._mCalls=a.calls; a._mCin=a.cin; a._mCout=a.cout;
+                               a._mRt=a.rt; a._mSv=a.sv; a._mTk=a.tk; }
+    const anyC = DQ.some(r=>r.c!==undefined);
+    if(anyC){ a.calls=b.c; a.cin=b.ci; a.cout=b.co;
+              a.sv=b.rn; a.rt=b.rn?b.rs/b.rn:null; }
+    const tkr = tkInRange(a.i);
+    a.tk = tkr!==null ? tkr : a._mTk;
     tn+=b.n; tdm+=b.dm[0]+b.dm[1]+b.dm[2]+b.dm[3];
     b.o.forEach((v,i)=>to[i]+=v); tneg+=b.f[3]; tk+=b.k;
+    tc+=b.c; tci+=b.ci; tco+=b.co; trs+=b.rs; trn+=b.rn;
   });
-  return {n:tn,q:tn?100*tdm/(85*tn):null,o:to,neg:tneg,ask:tk};
+  return {n:tn,q:tn?100*tdm/(85*tn):null,o:to,neg:tneg,ask:tk,
+          calls:tc,cin:tci,cout:tco,rsum:trs,rn:trn,
+          tickets:ROSTER.reduce((s,a)=>s+(a.tk||0),0)};
 }
 
 function render(){
@@ -1012,7 +1054,7 @@ function render(){
   setT("kQual",T.q===null?"\u2014":T.q.toFixed(1));
   document.querySelectorAll(".mtd-only").forEach(el=>el.classList.toggle("stale",!full));
 
-  snapshotPanel();
+  snapshotPanel(T);
   flowPanel();
   if($("#standings")) standings();
   if($("#scKpis")) scorecard();
