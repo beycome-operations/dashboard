@@ -914,7 +914,7 @@ function flowPanel(){
 function snapshotPanel(T){
   const wd=PERIOD.workingDay||1;
   /* prefer figures computed for the selected range; fall back to the month */
-  const R = T && T.calls!==undefined ? {
+  const R = (T && HAS_DAILY) ? {
       csat   : T.rn ? T.rsum/T.rn : null,
       surveys: T.rn,
       calls  : T.calls, callsIn: T.cin, callsOut: T.cout,
@@ -980,6 +980,7 @@ const inRange=d=>d>=RANGE.from&&d<=RANGE.to;
    Each row is a running total, so closed-in-range = last row in range
    minus the last row strictly before it. Falls back to the monthly
    figure until at least two snapshots straddle the range.            */
+const HAS_DAILY = Array.isArray(DQ) && DQ.some(r=>r && r.c!==undefined);
 const TS = (D.ts||[]).slice().sort((x,y)=>x[0]<y[0]?-1:1);
 const TS_COL = {GA:1, WM:2, KV:3, AV:4};
 function tkInRange(code){
@@ -1018,8 +1019,7 @@ function applySlice(){
     a.ask = b.n ? 100*b.k/b.n : null;
     if(a._mCalls===undefined){ a._mCalls=a.calls; a._mCin=a.cin; a._mCout=a.cout;
                                a._mRt=a.rt; a._mSv=a.sv; a._mTk=a.tk; }
-    const anyC = DQ.some(r=>r.c!==undefined);
-    if(anyC){ a.calls=b.c; a.cin=b.ci; a.cout=b.co;
+    if(HAS_DAILY){ a.calls=b.c; a.cin=b.ci; a.cout=b.co;
               a.sv=b.rn; a.rt=b.rn?b.rs/b.rn:null; }
     const tkr = tkInRange(a.i);
     a.tk = tkr!==null ? tkr : a._mTk;
