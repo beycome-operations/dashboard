@@ -503,7 +503,7 @@ select.cell{border:1px solid var(--line);border-radius:7px;padding:7px 9px;font:
           <thead><tr><th class="num" style="width:26px">#</th><th>Reason</th><th class="num">Calls</th><th>Share</th><th class="num">Unresolved</th><th class="num">Avg length</th></tr></thead>
           <tbody id="reasons"></tbody>
         </table>
-        <div class="note">Classified with keyword rules against the AI call summaries, then hand-checked per bucket. Listing edits and photo or document upload failures are counted together: 35 calls used both kinds of language, and the split was arbitrary. A further 10.6% stayed uncategorised. Solid ranks, approximate percentages.</div>
+        <div class="note">Classified by keyword rules against the AI call summaries, recomputed on every refresh. Buckets are matched in order, so each call counts once. Calls matching no bucket are excluded from this table.</div>
       </div>
       <div class="card">
         <div class="card-t">How calls end</div>
@@ -521,31 +521,7 @@ select.cell{border:1px solid var(--line);border-radius:7px;padding:7px 9px;font:
     <div class="card">
         <div class="card-t">Watchlist</div>
         <div class="card-s" style="margin-bottom:16px">Flagged automatically from this month's numbers</div>
-        <div class="alert bad">
-          <div class="alert-ic">!</div>
-          <div><b>Bonus rewards ticket volume, not same-day closing</b>
-          <p>KPI 2 pays on hitting a monthly ticket count, but the actual goal is closing same day. As written, an agent can miss every same-day close and still earn the KPI by working through a backlog. Worth resolving before the next bonus period.</p></div>
-        </div>
-        <div class="alert bad">
-          <div class="alert-ic">!</div>
-          <div><b>One person closed 52% of every ticket</b>
-          <p>Kenneth handled 2,384 of 4,559. Next is Giebelle at 1,004. If he takes leave the queue has no second pair of hands, and it is why his goal reads 169% attained while two others sit under 70%.</p></div>
-        </div>
-        <div class="alert bad">
-          <div class="alert-ic">&#9650;</div>
-          <div><b>Tickets and calls have split into two jobs</b>
-          <p>Kenneth is 52% of tickets but 25% of calls. Giebelle is 36% of calls but 22% of tickets. Nobody appears to have decided this, and it makes both of them hard to cover.</p></div>
-        </div>
-        <div class="alert warn">
-          <div class="alert-ic">&#9650;</div>
-          <div><b>Andrys takes 2.6x longer to close than Kenneth</b>
-          <p>15h13m against 5h47m, while handling a fifth of Kenneth's tickets. He also has the best quality score on the team at 84.6%, so this may be thoroughness rather than a problem. Worth asking before treating it as one.</p></div>
-        </div>
-        <div class="alert warn">
-          <div class="alert-ic">&#9650;</div>
-          <div><b>Survey coverage is thin</b>
-          <p>Agents ask for a rating on 41% of scored calls and only 363 came back against 2,704 total. Giebelle asks on 19% of hers and her 4.90 rests on 50 responses.</p></div>
-        </div>
+        <div id="wlBody"></div>
     </div>
 
   </section>
@@ -1003,6 +979,59 @@ function tkInRange(code){
   return isFinite(v) && v>=0 ? v : null;
 }
 
+
+/* ---------- Watchlist, computed from the range ---------- */
+function renderWatchlist(T){
+  const el=$("#wlBody"); if(!el) return;
+  const A=ROSTER.filter(a=>a.i!=="AC"||a.tk||a.calls);
+  const num=n=>Number(n||0).toLocaleString();
+  const pct=(a,b)=>b?Math.round(100*a/b):0;
+  const out=[];
+
+  out.push(["bad","!","Bonus rewards ticket volume, not same-day closing",
+    "KPI 2 pays on hitting a monthly ticket count, but the actual goal is closing same day. "+
+    "As written, an agent can miss every same-day close and still earn the KPI by working through a backlog."]);
+
+  const tkTot=A.reduce((s,a)=>s+(a.tk||0),0);
+  const byTk=[...A].sort((x,y)=>(y.tk||0)-(x.tk||0));
+  if(byTk.length>1 && tkTot){
+    const top=byTk[0], nxt=byTk[1], sh=pct(top.tk,tkTot);
+    if(sh>=40) out.push(["bad","!",`One person closed ${sh}% of every ticket`,
+      `${top.n.split(" ")[0]} handled ${num(top.tk)} of ${num(tkTot)}. Next is ${nxt.n.split(" ")[0]} at ${num(nxt.tk)}. `+
+      `If they take leave the queue has no second pair of hands.`]);
+  }
+  const cTot=A.reduce((s,a)=>s+(a.calls||0),0);
+  if(tkTot&&cTot){
+    const split=A.map(a=>({n:a.n.split(" ")[0],d:pct(a.tk,tkTot)-pct(a.calls,cTot),
+                           t:pct(a.tk,tkTot),c:pct(a.calls,cTot)}))
+                 .sort((x,y)=>Math.abs(y.d)-Math.abs(x.d));
+    if(split.length>1 && Math.abs(split[0].d)>=15)
+      out.push(["bad","\u25B2","Tickets and calls have split into two jobs",
+        `${split[0].n} is ${split[0].t}% of tickets but ${split[0].c}% of calls. `+
+        `${split[1].n} is ${split[1].c}% of calls but ${split[1].t}% of tickets. `+
+        `Nobody appears to have decided this, and it makes both of them hard to cover.`]);
+  }
+  const R=A.filter(a=>a.resH>0).sort((x,y)=>y.resH-x.resH);
+  if(R.length>1){
+    const s=R[0], f=R[R.length-1], r=s.resH/f.resH;
+    if(r>=1.8) out.push(["warn","\u25B2",
+      `${s.n.split(" ")[0]} takes ${r.toFixed(1)}x longer to close than ${f.n.split(" ")[0]}`,
+      `${hhmm(s.resH)} against ${hhmm(f.resH)}, on ${num(s.tk)} tickets against ${num(f.tk)}. `+
+      `Could be thoroughness rather than a problem \u2014 worth asking before treating it as one.`]);
+  }
+  if(T && T.n){
+    const ask=pct(T.ask,T.n);
+    if(ask<60){
+      const thin=A.filter(a=>a.sv>0).sort((x,y)=>(x.sv/(x.cin||1))-(y.sv/(y.cin||1)))[0];
+      out.push(["warn","\u25B2","Survey coverage is thin",
+        `Agents ask for a rating on ${ask}% of scored calls and ${num(T.rn)} came back against `+
+        `${num(T.cin)} inbound.`+(thin?` ${thin.n.split(" ")[0]}'s ${Number(thin.rt).toFixed(2)} rests on ${thin.sv} responses.`:"")]);
+    }
+  }
+  el.innerHTML = out.map(([cls,ic,t,p])=>
+    `<div class="alert ${cls}"><div class="alert-ic">${ic}</div><div><b>${t}</b><p>${p}</p></div></div>`).join("");
+}
+
 function slice(){
   const by={};
   ROSTER.forEach(a=>by[a.i]={n:0,dm:[0,0,0,0],o:[0,0,0,0],f:[0,0,0,0,0,0],k:0,c:0,ci:0,co:0,rs:0,rn:0,tk:0,mh:[]});
@@ -1074,6 +1103,7 @@ function render(){
   document.querySelectorAll(".mtd-only").forEach(el=>el.classList.toggle("stale",!full));
 
   snapshotPanel(T);
+  renderWatchlist(T);
   flowPanel();
   if($("#standings")) standings();
   if($("#scKpis")) scorecard();
