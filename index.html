@@ -863,13 +863,32 @@ function bonusPanel(){
      Overseas 70% / 40% ratio, not confirmed by management. Only the $${t.Miami[0]} top tier is confirmed.`;
 }
 
-function reasonsPanel(){$("#reasons").innerHTML=REASONS.map((r,i)=>`<tr>
-  <td class="num rk">${i+1}</td><td class="rsn">${r[0]}</td>
-  <td class="num mono" style="font-weight:700">${r[1]}</td>
-  <td><div class="bar-cell"><div class="meter"><i class="f-coral" style="width:${(r[2]/20*100).toFixed(1)}%"></i></div>
-    <span>${r[2]}%</span></div></td>
-  <td class="num mono ${r[3]>6?"r":""}">${r[3]}%</td><td class="num mono" style="color:var(--ink2)">${r[4]}</td></tr>`).join("");
-  setT("reasonsSub", `Top five reasons, classified from ${num(SNAP.reasonsScored)} call summaries`);
+function reasonsPanel(T){
+  let rows;
+  if(HAS_RSN && RLAB.length){
+    rows = RLAB.map((lab,i)=>({lab, n:RSN.c[i], u:RSN.u[i], d:RSN.d[i]}))
+               .filter(x=>x.n>0).sort((a,b)=>b.n-a.n).slice(0,5);
+  } else {
+    rows = (REASONS||[]).map(r=>({lab:r[0], n:r[1], share:r[2], unres:r[3], len:r[4]})).slice(0,5);
+  }
+  const scored = HAS_RSN ? (T&&T.n?T.n:0) : SNAP.reasonsScored;
+  const top = rows.length?Math.max(...rows.map(r=>r.share!=null?r.share:(scored?100*r.n/scored:0))):1;
+  if(!rows.length){
+    $("#reasons").innerHTML='<tr><td colspan="6" style="padding:18px;color:var(--ink3)">No scored calls in this range.</td></tr>';
+    setT("reasonsSub","Top five reasons, classified from 0 call summaries"); return;
+  }
+  $("#reasons").innerHTML=rows.map((r,i)=>{
+    const share = r.share!=null ? r.share : (scored?100*r.n/scored:0);
+    const unres = r.unres!=null ? r.unres : (r.n?100*r.u/r.n:0);
+    const len   = r.len   !=null ? r.len   : (r.n?(r.d/r.n).toFixed(1)+" min":"\u2014");
+    return `<tr>
+  <td class="num rk">${i+1}</td><td class="rsn">${r.lab}</td>
+  <td class="num mono" style="font-weight:700">${num(r.n)}</td>
+  <td><div class="bar-cell"><div class="meter"><i class="f-coral" style="width:${(share/Math.max(top,1)*100).toFixed(1)}%"></i></div>
+    <span>${share.toFixed(1)}%</span></div></td>
+  <td class="num mono ${unres>6?"r":""}">${unres.toFixed(1)}%</td>
+  <td class="num mono" style="color:var(--ink2)">${len}</td></tr>`;}).join("");
+  setT("reasonsSub", `Top five reasons, classified from ${num(scored)} call summaries in range`);
 }
 
 const FLOWC=[["Resolved on the call","var(--green)"],["Needs follow-up","var(--amber)"],["Unresolved","var(--red)"],["Escalated","#8b5cf6"]];
@@ -962,6 +981,9 @@ const inRange=d=>d>=RANGE.from&&d<=RANGE.to;
    Each row is a running total, so closed-in-range = last row in range
    minus the last row strictly before it. Falls back to the monthly
    figure until at least two snapshots straddle the range.            */
+let RSN={c:[0,0,0,0,0,0],u:[0,0,0,0,0,0],d:[0,0,0,0,0,0]};
+const RLAB = D.rlabels || [];
+const HAS_RSN = Array.isArray(DQ) && DQ.some(r=>r && r.rc);
 const HAS_DAILY = Array.isArray(DQ) && DQ.some(r=>r && r.c!==undefined);
 const HAS_TK    = Array.isArray(DQ) && DQ.some(r=>r && r.tk!==undefined);
 function hhmm(h){ const m=Math.round(h*60); return String(Math.floor(m/60)).padStart(2,"0")+":"+String(m%60).padStart(2,"0"); }
@@ -1035,7 +1057,9 @@ function renderWatchlist(T){
 function slice(){
   const by={};
   ROSTER.forEach(a=>by[a.i]={n:0,dm:[0,0,0,0],o:[0,0,0,0],f:[0,0,0,0,0,0],k:0,c:0,ci:0,co:0,rs:0,rn:0,tk:0,mh:[]});
+  RSN = {c:[0,0,0,0,0,0], u:[0,0,0,0,0,0], d:[0,0,0,0,0,0]};
   DQ.filter(r=>inRange(r.d)).forEach(r=>{
+    if(r.rc) for(let i=0;i<6;i++){ RSN.c[i]+=r.rc[i]||0; RSN.u[i]+=r.ru?r.ru[i]||0:0; RSN.d[i]+=r.rd?r.rd[i]||0:0; }
     const b=by[r.a]; if(!b)return;
     b.n+=r.n; b.k+=r.k;
     b.c+=r.c||0; b.ci+=r.ci||0; b.co+=r.co||0; b.rs+=r.rs||0; b.rn+=r.rn||0;
