@@ -1030,8 +1030,10 @@ function applySlice(){
                                a._mRt=a.rt; a._mSv=a.sv; a._mTk=a.tk; }
     if(HAS_DAILY){ a.calls=b.c; a.cin=b.ci; a.cout=b.co;
               a.sv=b.rn; a.rt=b.rn?b.rs/b.rn:null; }
+    else { a.calls=a._mCalls; a.cin=a._mCin; a.cout=a._mCout;
+           a.rt=a._mRt; a.sv=a._mSv; }
     if(HAS_TK){
-      a.tk = b.tk;
+      a.tk = b.tk;                       /* 0 when the agent has no rows in range */
       const w = b.mh.filter(x=>x.n>0);
       const tot = w.reduce((s,x)=>s+x.n,0);
       a.resH = tot ? +(w.reduce((s,x)=>s+x.h*x.n,0)/tot).toFixed(2) : null;
