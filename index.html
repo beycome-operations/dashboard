@@ -850,7 +850,12 @@ function bonusPanel(){
   $("#bonusCards").innerHTML=cards;
 
   /* period header + threshold chips, straight from config */
-  setT("bpLine", `${PERIOD.label||""} · as of ${PERIOD.asOf||""} · working day ${PERIOD.workingDay} of ${PERIOD.workingDays}`);
+  const fmt=d=>{const [y,m,dd]=String(d).split("-");
+    return ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][+m-1]+" "+(+dd);};
+  const isPeriod = RANGE.label==="MTD";
+  setT("bpLine", isPeriod
+    ? `${PERIOD.label||""} · as of ${PERIOD.asOf||""} · working day ${PERIOD.workingDay} of ${PERIOD.workingDays}`
+    : `${fmt(RANGE.from)} \u2192 ${fmt(RANGE.to)} · ${RANGE.label} · figures follow the range above`);
   $("#bpChips").innerHTML =
     `<span class="chip flat">Quality ${SAVED.qual}%</span>
      <span class="chip flat">Tickets ${SAVED.tk}%</span>
@@ -871,7 +876,8 @@ function reasonsPanel(T){
   } else {
     rows = (REASONS||[]).map(r=>({lab:r[0], n:r[1], share:r[2], unres:r[3], len:r[4]})).slice(0,5);
   }
-  const scored = HAS_RSN ? (T&&T.n?T.n:0) : SNAP.reasonsScored;
+  const bucketTot = HAS_RSN ? RSN.c.reduce((a,b)=>a+b,0) : 0;
+  const scored = HAS_RSN ? (bucketTot || (T&&T.n?T.n:0)) : SNAP.reasonsScored;
   const top = rows.length?Math.max(...rows.map(r=>r.share!=null?r.share:(scored?100*r.n/scored:0))):1;
   if(!rows.length){
     $("#reasons").innerHTML='<tr><td colspan="6" style="padding:18px;color:var(--ink3)">No scored calls in this range.</td></tr>';
@@ -889,7 +895,7 @@ function reasonsPanel(T){
     <span>${share.toFixed(1)}%</span></div></td>
   <td class="num mono ${unres>6?"r":""}">${unres.toFixed(1)}%</td>
   <td class="num mono" style="color:var(--ink2)">${len}</td></tr>`;}).join("");
-  setT("reasonsSub", `Top five reasons, classified from ${num(scored)} call summaries in range`);
+  setT("reasonsSub", `Top five reasons, classified from ${num(scored)} matched call summaries in range`);
 }
 
 const FLOWC=[["Resolved on the call","var(--green)"],["Needs follow-up","var(--amber)"],["Unresolved","var(--red)"],["Escalated","#8b5cf6"]];
@@ -1087,7 +1093,8 @@ function applySlice(){
     else { a.calls=a._mCalls; a.cin=a._mCin; a.cout=a._mCout;
            a.rt=a._mRt; a.sv=a._mSv; }
     if(HAS_TK){
-      a.tk = b.tk;                       /* 0 when the agent has no rows in range */
+      a.tk = b.tk;
+      a.goalTk = b.tk;                   /* the goal is measured over the same range */                       /* 0 when the agent has no rows in range */
       const w = b.mh.filter(x=>x.n>0);
       const tot = w.reduce((s,x)=>s+x.n,0);
       a.resH = tot ? +(w.reduce((s,x)=>s+x.h*x.n,0)/tot).toFixed(2) : null;
